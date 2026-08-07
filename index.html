@@ -1,0 +1,1120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Certero — Punto de encuentro</title>
+<meta name="description" content="Certero conecta directo a personas que buscan trabajo con pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0E6F6B;
+    --teal-deep:#0A4A47;
+    --coral:#FF6B4A;
+    --amber:#F2B705;
+    --bone:#FAF7F2;
+    --white:#FFFFFF;
+    --ink:#1B231F;
+    --stone:#5B6663;
+    --mist:#E4F1EF;
+    --radius-lg:28px;
+    --radius-md:18px;
+  }
+  :root[data-theme="dark"]{
+    --bone:#0E1614;
+    --white:#16211E;
+    --ink:#F3F1EA;
+    --stone:#9FB0AC;
+    --mist:#173330;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bone:#0E1614;
+      --white:#16211E;
+      --ink:#F3F1EA;
+      --stone:#9FB0AC;
+      --mist:#173330;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Karla','Inter',system-ui,sans-serif;
+    background:var(--bone);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.logotype{
+    font-family:'Manrope',system-ui,sans-serif;
+  }
+  a{color:inherit;}
+
+  /* ---------- top nav ---------- */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    position:sticky;
+    top:0;
+    z-index:20;
+    backdrop-filter:blur(10px);
+    background:color-mix(in srgb, var(--bone) 85%, transparent);
+    border-bottom:1px solid color-mix(in srgb, var(--stone) 20%, transparent);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logotype{
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+  }
+  nav.top-links{
+    display:flex;
+    gap:28px;
+    font-size:14px;
+    color:var(--stone);
+  }
+  nav.top-links a{ text-decoration:none; }
+  nav.top-links a:hover{ color:var(--ink); }
+  @media (max-width:640px){
+    nav.top-links{ display:none; }
+  }
+
+  /* ---------- logo mark ---------- */
+  .mark{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+  }
+  .mark-bg{
+    fill:var(--teal);
+  }
+  .mark-stroke{
+    fill:none;
+    stroke:var(--white);
+    stroke-width:9;
+    stroke-linecap:round;
+    stroke-dasharray:64;
+    stroke-dashoffset:64;
+    animation:draw 2.4s ease-in-out infinite;
+  }
+  .mark-stroke.two{ animation-delay:.15s; }
+  @keyframes draw{
+    0%{ stroke-dashoffset:64; }
+    35%{ stroke-dashoffset:0; }
+    75%{ stroke-dashoffset:0; }
+    100%{ stroke-dashoffset:0; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:clamp(48px,8vw,96px) clamp(20px,5vw,64px) clamp(64px,8vw,120px);
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:48px;
+    align-items:center;
+    max-width:1240px;
+    margin:0 auto;
+  }
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr; text-align:center;}
+    .hero-visual{order:-1;}
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--mist);
+    color:var(--teal-deep);
+    font-size:13px;
+    font-weight:700;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:20px;
+  }
+  .eyebrow .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--coral);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); opacity:1; }
+    50%{ transform:scale(1.6); opacity:.4; }
+  }
+  h1{
+    font-size:clamp(34px,4.4vw,54px);
+    line-height:1.06;
+    letter-spacing:-0.02em;
+    margin:0 0 20px;
+    font-weight:800;
+  }
+  h1 .accent{ color:var(--teal); }
+  .lead{
+    font-size:18px;
+    line-height:1.55;
+    color:var(--stone);
+    max-width:46ch;
+    margin:0 0 34px;
+  }
+  @media (max-width:860px){ .lead{margin-left:auto;margin-right:auto;} }
+
+  .cta-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  @media (max-width:860px){ .cta-row{justify-content:center;} }
+
+  .btn{
+    border:none;
+    border-radius:999px;
+    padding:15px 26px;
+    font-size:15px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:transform .18s ease, box-shadow .18s ease;
+    text-decoration:none;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{
+    background:var(--teal);
+    color:#fff;
+    box-shadow:0 10px 24px -10px color-mix(in srgb, var(--teal) 70%, transparent);
+  }
+  .btn-primary:hover{ box-shadow:0 14px 30px -10px color-mix(in srgb, var(--teal) 80%, transparent); }
+  .btn-ghost{
+    background:var(--coral);
+    color:#fff;
+    box-shadow:0 10px 24px -10px color-mix(in srgb, var(--coral) 70%, transparent);
+  }
+  .btn-ghost:hover{ box-shadow:0 14px 30px -10px color-mix(in srgb, var(--coral) 80%, transparent); }
+
+  /* hero visual: two paths converging */
+  .hero-visual{
+    position:relative;
+    aspect-ratio:1/1;
+    max-width:420px;
+    margin:0 auto;
+  }
+  .hero-visual svg{ width:100%; height:100%; }
+  .path-a, .path-b{
+    fill:none;
+    stroke-width:5;
+    stroke-linecap:round;
+    stroke-dasharray:340;
+    stroke-dashoffset:340;
+    animation:trace 3.6s ease-in-out infinite;
+  }
+  .path-a{ stroke:var(--teal); animation-delay:0s; }
+  .path-b{ stroke:var(--coral); animation-delay:.25s; }
+  @keyframes trace{
+    0%{ stroke-dashoffset:340; }
+    45%{ stroke-dashoffset:0; }
+    80%{ stroke-dashoffset:0; }
+    100%{ stroke-dashoffset:0; }
+  }
+  .meet-point{
+    fill:var(--amber);
+    opacity:0;
+    animation:pop 3.6s ease-in-out infinite;
+    transform-origin:center;
+  }
+  @keyframes pop{
+    0%,42%{ opacity:0; transform:scale(0); }
+    52%{ opacity:1; transform:scale(1.4); }
+    62%,100%{ opacity:1; transform:scale(1); }
+  }
+
+  .meet-chip{
+    position:absolute;
+    left:58%;
+    top:33%;
+    transform:translate(0,-50%);
+    z-index:2;
+  }
+  .meet-chip-inner{
+    display:inline-flex;
+    white-space:nowrap;
+    background:var(--amber);
+    color:var(--teal-deep);
+    font-size:12px;
+    font-weight:800;
+    padding:8px 13px;
+    border-radius:999px;
+    box-shadow:0 12px 26px -12px color-mix(in srgb, var(--amber) 70%, transparent);
+    opacity:0;
+    transform-origin:left center;
+    animation:pop 3.6s ease-in-out infinite;
+    animation-delay:.35s;
+  }
+
+  .attr-chip{
+    position:absolute;
+    background:var(--white);
+    border-radius:14px;
+    padding:9px 13px;
+    font-size:12.5px;
+    font-weight:700;
+    box-shadow:0 12px 28px -14px rgba(0,0,0,.28);
+    display:flex;
+    align-items:center;
+    gap:7px;
+    opacity:0;
+    white-space:nowrap;
+    animation-name:chip-cycle;
+    animation-duration:8s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  .attr-chip.a1{ top:4%;  left:-8%;  color:var(--teal-deep); animation-delay:0s; }
+  .attr-chip.a2{ top:26%; left:-16%; color:var(--teal-deep); animation-delay:2s; }
+  .attr-chip.a3{ top:50%; left:-2%;  color:var(--teal-deep); animation-delay:4s; }
+  .attr-chip.a4{ top:74%; left:-12%; color:var(--teal-deep); animation-delay:6s; }
+  .attr-chip.b1{ bottom:6%;  right:-10%; color:var(--coral); animation-delay:1s; }
+  .attr-chip.b2{ bottom:30%; right:-2%;  color:var(--coral); animation-delay:3.5s; }
+  .attr-chip.b3{ bottom:40%; right:-22%; color:var(--coral); animation-delay:6s; }
+  @keyframes chip-cycle{
+    0%,100%{ opacity:0; transform:translateY(10px) scale(.85); }
+    4%{ opacity:1; transform:translateY(0) scale(1.05); }
+    9%,18%{ opacity:1; transform:translateY(-6px) scale(1); }
+    23%{ opacity:0; transform:translateY(-14px) scale(.85); }
+  }
+  @media (max-width:480px){
+    .attr-chip{ display:none; }
+  }
+
+  /* ---------- entry points ---------- */
+  .entries{
+    max-width:1240px;
+    margin:0 auto;
+    padding:0 clamp(20px,5vw,64px) clamp(64px,8vw,110px);
+  }
+  .entries-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 44px;
+  }
+  .entries-head h2{
+    font-size:clamp(26px,3vw,34px);
+    margin:0 0 12px;
+    font-weight:800;
+  }
+  .entries-head p{
+    color:var(--stone);
+    font-size:16px;
+    margin:0;
+  }
+  .entry-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  @media (max-width:760px){ .entry-grid{grid-template-columns:1fr;} }
+
+  .entry-card{
+    position:relative;
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    padding:38px 32px;
+    overflow:hidden;
+    border:1px solid color-mix(in srgb, var(--stone) 15%, transparent);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .entry-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 24px 48px -24px rgba(0,0,0,.25);
+  }
+  .entry-card .glow{
+    position:absolute;
+    width:220px;height:220px;
+    border-radius:50%;
+    filter:blur(50px);
+    opacity:.25;
+    top:-80px;
+    z-index:0;
+    transition:opacity .25s ease;
+  }
+  .entry-card:hover .glow{ opacity:.4; }
+  .entry-card.candidato .glow{ background:var(--teal); right:-60px; }
+  .entry-card.empresa .glow{ background:var(--coral); left:-60px; }
+
+  .entry-icon{
+    width:56px;height:56px;
+    border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;
+    position:relative;
+    z-index:1;
+    overflow:visible;
+  }
+  .entry-icon svg{
+    width:28px; height:28px;
+    filter:drop-shadow(0 3px 5px rgba(0,0,0,.18));
+  }
+  .entry-icon svg *{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:10;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .entry-card.candidato .entry-icon{ background:var(--mist); color:var(--teal-deep); }
+  .entry-card.empresa .entry-icon{ background:color-mix(in srgb, var(--coral) 18%, var(--white)); color:var(--coral); }
+
+  .entry-card.candidato .entry-icon svg{
+    transform-origin:44% 44%;
+    animation:icon-scan 4.5s ease-in-out infinite;
+  }
+  @keyframes icon-scan{
+    0%,100%{ transform:rotate(0deg) translateX(0); }
+    50%{ transform:rotate(-9deg) translateX(-1.5px); }
+  }
+  .entry-card.empresa .entry-icon svg{
+    transform-origin:50% 68%;
+    animation:icon-click 4.5s ease-in-out infinite;
+  }
+  @keyframes icon-click{
+    0%,78%,100%{ transform:scale(1,1); }
+    84%{ transform:scale(1.08,0.9); }
+    90%{ transform:scale(0.95,1.06); }
+    95%{ transform:scale(1,1); }
+  }
+  .entry-card.candidato:hover .entry-icon svg{ animation-duration:1.4s; }
+  .entry-card.empresa:hover .entry-icon svg{ animation-duration:1.6s; }
+
+  .entry-card h3{
+    font-size:22px;
+    margin:0 0 10px;
+    position:relative;
+    z-index:1;
+  }
+  .entry-card p{
+    color:var(--stone);
+    font-size:15px;
+    line-height:1.55;
+    margin:0 0 22px;
+    position:relative;
+    z-index:1;
+  }
+  .entry-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 26px;
+    position:relative;
+    z-index:1;
+  }
+  .entry-list li{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+    color:var(--ink);
+    padding:6px 0;
+  }
+  .entry-list li::before{
+    content:'';
+    width:16px;height:16px;
+    border-radius:50%;
+    flex-shrink:0;
+    background:var(--mist);
+    position:relative;
+  }
+  .entry-card.candidato .entry-list li::before{ background:var(--mist); box-shadow:inset 0 0 0 5px var(--teal); }
+  .entry-card.empresa .entry-list li::before{ background:color-mix(in srgb, var(--coral) 15%, var(--white)); box-shadow:inset 0 0 0 5px var(--coral); }
+
+  .entry-card .btn{ position:relative; z-index:1; width:100%; justify-content:center; }
+  .entry-card.candidato .btn{ background:var(--teal); color:#fff; }
+  .entry-card.empresa .btn{ background:var(--coral); color:#fff; }
+
+  .entry-flow-note{
+    font-size:12px;
+    color:var(--stone);
+    text-align:center;
+    margin:10px 0 0;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- trust strip ---------- */
+  .trust{
+    background:var(--mist);
+    padding:clamp(40px,6vw,64px) clamp(20px,5vw,64px);
+  }
+  .trust-inner{
+    max-width:1000px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .trust h2{
+    font-size:clamp(22px,2.6vw,28px);
+    margin:0 0 8px;
+    font-weight:800;
+    color:var(--teal-deep);
+  }
+  .trust p{
+    color:var(--stone);
+    max-width:52ch;
+    margin:0 auto 32px;
+    font-size:15px;
+  }
+  .trust-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  @media (max-width:760px){ .trust-grid{grid-template-columns:1fr;} }
+  .trust-item{
+    background:var(--white);
+    border-radius:var(--radius-md);
+    padding:24px;
+    text-align:left;
+  }
+  .trust-item .num{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:15px;
+    color:var(--teal);
+    margin-bottom:8px;
+    display:block;
+  }
+  .trust-item p{
+    margin:0;
+    font-size:14px;
+    color:var(--ink);
+    text-align:left;
+  }
+
+  /* ---------- pricing ---------- */
+  .pricing{
+    max-width:1240px;
+    margin:0 auto;
+    padding:clamp(60px,8vw,100px) clamp(20px,5vw,64px);
+    text-align:center;
+  }
+  .pricing h2{
+    font-size:clamp(26px,3vw,34px);
+    font-weight:800;
+    margin:0 0 12px;
+  }
+  .pricing-sub{
+    color:var(--stone);
+    max-width:56ch;
+    margin:0 auto 44px;
+    font-size:16px;
+    line-height:1.55;
+  }
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:24px;
+    text-align:left;
+  }
+  .pricing-card{
+    position:relative;
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    padding:30px 26px;
+    border:1px solid color-mix(in srgb, var(--stone) 15%, transparent);
+    display:flex;
+    flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .pricing-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 24px 48px -24px rgba(0,0,0,.25);
+  }
+  .pricing-card--highlight{
+    border-color:var(--teal);
+    box-shadow:0 16px 36px -20px color-mix(in srgb, var(--teal) 60%, transparent);
+  }
+  .pricing-badge{
+    align-self:flex-start;
+    background:var(--teal);
+    color:#fff;
+    font-size:11.5px;
+    font-weight:800;
+    padding:4px 11px;
+    border-radius:999px;
+    margin-bottom:14px;
+  }
+  .pricing-name{
+    font-family:'Manrope',sans-serif;
+    font-size:17px;
+    font-weight:800;
+    margin:0 0 6px;
+  }
+  .pricing-credits{
+    color:var(--stone);
+    font-size:13.5px;
+    margin:0 0 18px;
+  }
+  .pricing-amount{
+    font-family:'Manrope',sans-serif;
+    font-size:28px;
+    font-weight:800;
+    color:var(--teal-deep);
+    margin:0 0 2px;
+  }
+  .pricing-per-credit{
+    color:var(--stone);
+    font-size:12.5px;
+    margin:0 0 22px;
+  }
+  .pricing-card .btn{
+    margin-top:auto;
+    width:100%;
+    justify-content:center;
+    background:var(--teal);
+    color:#fff;
+    font-size:13.5px;
+    padding:12px 18px;
+  }
+  .pricing-note{
+    color:var(--stone);
+    font-size:14px;
+    max-width:60ch;
+    margin:32px auto 0;
+  }
+
+  /* ---------- match demo strip ---------- */
+  .demo{
+    max-width:1240px;
+    margin:0 auto;
+    padding:clamp(60px,8vw,100px) clamp(20px,5vw,64px);
+    text-align:center;
+  }
+  .demo-intro{
+    max-width:680px;
+    margin:0 auto 32px;
+  }
+  .demo-intro h2{
+    font-size:clamp(24px,3vw,32px);
+    font-weight:800;
+    margin:0 0 10px;
+  }
+  .demo-intro p{
+    color:var(--stone);
+    font-size:15.5px;
+    line-height:1.6;
+    margin:0;
+  }
+
+  .demo-timeline{
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:0;
+    margin:0 0 32px;
+    flex-wrap:nowrap;
+    max-width:100%;
+  }
+  .tl-step{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    min-width:0;
+    flex:0 1 auto;
+    padding:0 2px;
+  }
+  .tl-dot{
+    width:clamp(24px,7vw,34px);height:clamp(24px,7vw,34px);
+    flex-shrink:0;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:clamp(11px,3vw,14px);font-weight:800;color:#fff;
+    opacity:0;
+    animation-duration:6s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  .tl-step.step-a .tl-dot{ background:var(--teal); animation-name:tl-dot-a; }
+  .tl-step.step-b .tl-dot{ background:var(--coral); animation-name:tl-dot-b; }
+  .tl-step.step-c .tl-dot{ background:var(--amber); color:var(--teal-deep); animation-name:tl-dot-c; }
+  @keyframes tl-dot-a{
+    0%,3%{ opacity:0; transform:scale(0); }
+    8%{ opacity:1; transform:scale(1.35); }
+    13%,88%{ opacity:1; transform:scale(1); }
+    94%,100%{ opacity:0; transform:scale(.6); }
+  }
+  @keyframes tl-dot-b{
+    0%,20%{ opacity:0; transform:scale(0); }
+    25%{ opacity:1; transform:scale(1.35); }
+    30%,88%{ opacity:1; transform:scale(1); }
+    94%,100%{ opacity:0; transform:scale(.6); }
+  }
+  @keyframes tl-dot-c{
+    0%,37%{ opacity:0; transform:scale(0); }
+    42%{ opacity:1; transform:scale(1.35); }
+    47%,88%{ opacity:1; transform:scale(1); }
+    94%,100%{ opacity:0; transform:scale(.6); }
+  }
+
+  .tl-label{
+    font-size:clamp(9.5px,2.6vw,12.5px); font-weight:700; color:var(--stone);
+    white-space:nowrap;
+    opacity:0;
+    animation-duration:6s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  .tl-step.step-a .tl-label{ animation-name:tl-label-a; }
+  .tl-step.step-b .tl-label{ animation-name:tl-label-b; }
+  .tl-step.step-c .tl-label{ animation-name:tl-label-c; }
+  @keyframes tl-label-a{
+    0%,5%{ opacity:0; transform:translateY(6px); }
+    11%,88%{ opacity:1; transform:translateY(0); }
+    94%,100%{ opacity:0; transform:translateY(6px); }
+  }
+  @keyframes tl-label-b{
+    0%,22%{ opacity:0; transform:translateY(6px); }
+    28%,88%{ opacity:1; transform:translateY(0); }
+    94%,100%{ opacity:0; transform:translateY(6px); }
+  }
+  @keyframes tl-label-c{
+    0%,39%{ opacity:0; transform:translateY(6px); }
+    45%,88%{ opacity:1; transform:translateY(0); }
+    94%,100%{ opacity:0; transform:translateY(6px); }
+  }
+
+  .tl-line{
+    width:clamp(14px,6vw,44px);height:2px;
+    flex-shrink:0;
+    background:color-mix(in srgb, var(--stone) 30%, transparent);
+    margin:clamp(12px,3vw,16px) 4px 0;
+    transform-origin:left center;
+    transform:scaleX(0);
+    animation-duration:6s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  .tl-line.line-1{ animation-name:tl-line-1; }
+  .tl-line.line-2{ animation-name:tl-line-2; }
+  @keyframes tl-line-1{
+    0%,13%{ transform:scaleX(0); }
+    20%,88%{ transform:scaleX(1); }
+    94%,100%{ transform:scaleX(0); }
+  }
+  @keyframes tl-line-2{
+    0%,30%{ transform:scaleX(0); }
+    37%,88%{ transform:scaleX(1); }
+    94%,100%{ transform:scaleX(0); }
+  }
+
+  .chat-avatar{
+    width:34px;height:34px;
+    border-radius:50%;
+    background:var(--teal);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .chat-avatar svg{ width:20px; height:20px; }
+  .chat-avatar path{
+    fill:none;
+    stroke:#fff;
+    stroke-width:11;
+    stroke-linecap:round;
+    stroke-dasharray:64;
+    stroke-dashoffset:64;
+    animation:draw 2.4s ease-in-out infinite;
+  }
+  .chat-avatar path.two{ animation-delay:.15s; }
+
+  .phone{
+    background:var(--white);
+    border-radius:32px;
+    padding:18px;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.3);
+    max-width:340px;
+    margin:0 auto;
+  }
+  .phone-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 8px 14px;
+    border-bottom:1px solid color-mix(in srgb, var(--stone) 18%, transparent);
+    margin-bottom:14px;
+    text-align:left;
+  }
+  .phone-head strong{ font-size:14px; }
+  .phone-head span{ display:block; font-size:11px; color:var(--stone); }
+
+  .bubble{
+    max-width:82%;
+    padding:11px 14px;
+    border-radius:16px;
+    font-size:13.5px;
+    line-height:1.4;
+    margin-bottom:10px;
+    opacity:0;
+    text-align:left;
+    animation-duration:6s;
+    animation-timing-function:ease-in-out;
+    animation-iteration-count:infinite;
+  }
+  .bubble.bot{
+    background:var(--mist);
+    color:var(--ink);
+    border-bottom-left-radius:4px;
+    animation-name:bubble-bot;
+  }
+  .bubble.match{
+    background:var(--amber);
+    color:var(--teal-deep);
+    font-weight:700;
+    border-radius:16px;
+    margin:14px auto 0;
+    text-align:center;
+    animation-name:bubble-match;
+    box-shadow:0 10px 22px -10px color-mix(in srgb, var(--amber) 70%, transparent);
+  }
+  @keyframes bubble-bot{
+    0%,43%{ opacity:0; transform:translateY(8px); }
+    49%,88%{ opacity:1; transform:translateY(0); }
+    94%,100%{ opacity:0; transform:translateY(8px); }
+  }
+  @keyframes bubble-match{
+    0%,50%{ opacity:0; transform:translateY(8px); }
+    56%,88%{ opacity:1; transform:translateY(0); }
+    94%,100%{ opacity:0; transform:translateY(8px); }
+  }
+
+  /* ---------- footer ---------- */
+  footer.site-footer{
+    padding:44px clamp(20px,5vw,64px) 48px;
+    text-align:center;
+    border-top:1px solid color-mix(in srgb, var(--stone) 20%, transparent);
+  }
+  .footer-brand{
+    font-family:'Manrope',sans-serif;
+    font-weight:800;
+    font-size:16px;
+    margin-bottom:14px;
+  }
+  .footer-links{
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+  .footer-links a{
+    font-size:13.5px;
+    color:var(--stone);
+    text-decoration:none;
+  }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-copy{
+    color:var(--stone);
+    font-size:12.5px;
+    margin:0;
+  }
+
+  /* ---------- modals: pregunta "quiero contratar" y "cómo pagar" ---------- */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(20,20,19,.55);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal-card{
+    position:relative;
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    padding:34px 30px;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.35);
+  }
+  .modal-card--wide{ max-width:480px; }
+  .modal-close{
+    position:absolute;
+    top:14px;
+    right:14px;
+    background:none;
+    border:none;
+    font-size:18px;
+    color:var(--stone);
+    cursor:pointer;
+    padding:4px;
+    line-height:1;
+  }
+  .modal-close:hover{ color:var(--ink); }
+  .modal-card h3{
+    font-size:20px;
+    font-weight:800;
+    margin:0 0 18px;
+    padding-right:20px;
+  }
+  .modal-actions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .modal-actions .btn{ justify-content:center; width:100%; }
+  .modal-plan-label{
+    font-size:13.5px;
+    font-weight:700;
+    color:var(--teal-deep);
+    background:var(--mist);
+    display:inline-block;
+    padding:5px 12px;
+    border-radius:999px;
+    margin:0 0 18px;
+  }
+  .modal-pay-list{
+    list-style:none;
+    padding:0;
+    margin:0 0 18px;
+  }
+  .modal-pay-list li{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--ink);
+    padding:10px 0;
+    border-bottom:1px solid color-mix(in srgb, var(--stone) 15%, transparent);
+  }
+  .modal-pay-list li:last-child{ border-bottom:none; }
+  .modal-pay-note{
+    font-size:13px;
+    color:var(--stone);
+    line-height:1.5;
+    margin:0 0 20px;
+  }
+  #modal-pagar-cta{ width:100%; justify-content:center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 100 100">
+      <rect class="mark-bg" x="0" y="0" width="100" height="100" rx="26"/>
+      <path class="mark-stroke" d="M22 68 C 30 68, 40 60, 50 40"/>
+      <path class="mark-stroke two" d="M78 68 C 70 68, 60 60, 50 40"/>
+    </svg>
+    <span class="logotype">certero</span>
+  </div>
+  <nav class="top-links">
+    <a href="#entries">Para personas</a>
+    <a href="#entries">Para pymes</a>
+    <a href="#precios">Precios</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="eyebrow"><span class="dot"></span> Match por WhatsApp, con reglas claras</div>
+    <h1>Se encuentran. <span class="accent">Se confirman.</span><br>Se contactan.</h1>
+    <p class="lead">Certero conecta directo a personas que buscan trabajo con empresas que necesitan contratar — sin CV, sin ranking automático, sin esperar 40 días. Tú decides con quién avanzar.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://wa.me/{{WHATSAPP_NUMERO}}?text=Hola%2C%20busco%20trabajo%20y%20quiero%20partir%20con%20Certero">Busco trabajo →</a>
+      <button type="button" class="btn btn-ghost" onclick="openContratar()">Quiero contratar →</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 300 300">
+      <path class="path-a" d="M40 240 C 90 240, 150 190, 150 100"/>
+      <path class="path-b" d="M260 240 C 210 240, 150 190, 150 100"/>
+      <circle class="meet-point" cx="150" cy="100" r="10"/>
+    </svg>
+    <div class="attr-chip a1">📍 Comuna ok</div>
+    <div class="attr-chip a2">💼 Cargo calza</div>
+    <div class="attr-chip a3">🗓️ Disponible</div>
+    <div class="attr-chip a4">💰 Renta ok</div>
+    <div class="attr-chip b1">🏢 Vacante activa</div>
+    <div class="attr-chip b2">✅ Perfil verificado</div>
+    <div class="attr-chip b3">📋 Reglas claras</div>
+    <div class="meet-chip"><span class="meet-chip-inner">✓ Match confirmado</span></div>
+  </div>
+</section>
+
+<section class="entries" id="entries">
+  <div class="entries-head">
+    <h2>Dos caminos, un mismo punto de encuentro</h2>
+    <p>La misma conversación por WhatsApp, dos experiencias pensadas para lo que cada lado necesita resolver.</p>
+  </div>
+  <div class="entry-grid">
+    <div class="entry-card candidato">
+      <div class="glow"></div>
+      <div class="entry-icon">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="40" cy="40" r="24"/><line x1="58" y1="58" x2="80" y2="80"/></svg>
+      </div>
+      <h3>Busco trabajo</h3>
+      <p>Cuéntale a Certero qué buscas, en qué comuna y cuándo puedes empezar. Sin currículum, sin formularios largos.</p>
+      <ul class="entry-list">
+        <li>Perfil anónimo hasta que confirmes el match</li>
+        <li>Match por cargo, comuna, renta y disponibilidad</li>
+        <li>Contacto solo si ambos dicen que sí</li>
+      </ul>
+      <a class="btn" href="https://wa.me/{{WHATSAPP_NUMERO}}?text=Hola%2C%20busco%20trabajo%20y%20quiero%20partir%20con%20Certero">Empezar por WhatsApp</a>
+      <p class="entry-flow-note">Escribes por WhatsApp y armas tu perfil en minutos.</p>
+    </div>
+    <div class="entry-card empresa">
+      <div class="glow"></div>
+      <div class="entry-icon">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="18" y="42" width="64" height="40" rx="8"/><path d="M38 42 V30 a8 8 0 0 1 8-8 h8 a8 8 0 0 1 8 8 V42"/></svg>
+      </div>
+      <h3>Quiero contratar</h3>
+      <p>Describe la vacante como se la contarías a un conocido. Certero te propone candidatos que ya calzan con lo esencial.</p>
+      <ul class="entry-list">
+        <li>Sin publicar la vacante en portales públicos</li>
+        <li>Reglas transparentes, no un ranking de caja negra</li>
+        <li>Reputación bidireccional después de cada encuentro</li>
+        <li>Créditos por match, con garantía de reposición de 90 días</li>
+      </ul>
+      <button type="button" class="btn" onclick="openContratar()">Empezar por WhatsApp</button>
+      <p class="entry-flow-note">Escribes por WhatsApp y describes tu vacante en minutos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="trust-inner">
+    <h2>La confianza no es un adorno, es el producto</h2>
+    <p>Un match en minutos, no en semanas: reglas visibles en cada paso, sin ranking de caja negra y sin perder tiempo con perfiles que no calzan.</p>
+    <div class="trust-grid">
+      <div class="trust-item"><span class="num">01</span><p>Te decimos qué datos pedimos y para qué, antes de pedirlos.</p></div>
+      <div class="trust-item"><span class="num">02</span><p>Tu contacto se revela solo después de que ambas partes confirman.</p></div>
+      <div class="trust-item"><span class="num">03</span><p>Cada encuentro deja una reputación real, visible para el siguiente match.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="precios">
+  <h2>Sabes cuánto pagas desde el primer mensaje</h2>
+  <p class="pricing-sub">El candidato usa Certero gratis, siempre. La empresa paga por match confirmado, no por publicar: compra créditos por adelantado y cada uno trae garantía de reposición de 90 días si la relación no prospera.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <p class="pricing-name">Individual</p>
+      <p class="pricing-credits">1 crédito</p>
+      <p class="pricing-amount">$78.000</p>
+      <p class="pricing-per-credit">$78.000 CLP / crédito</p>
+      <button type="button" class="btn" onclick="openPagar('Individual')">Elegir este plan</button>
+    </div>
+    <div class="pricing-card">
+      <p class="pricing-name">Esporádico</p>
+      <p class="pricing-credits">3 créditos</p>
+      <p class="pricing-amount">$215.000</p>
+      <p class="pricing-per-credit">~$71.700 CLP / crédito</p>
+      <button type="button" class="btn" onclick="openPagar('Esporádico')">Elegir este plan</button>
+    </div>
+    <div class="pricing-card pricing-card--highlight">
+      <span class="pricing-badge">Más elegido</span>
+      <p class="pricing-name">Alta Rotación</p>
+      <p class="pricing-credits">10 créditos</p>
+      <p class="pricing-amount">$640.000</p>
+      <p class="pricing-per-credit">~$64.000 CLP / crédito</p>
+      <button type="button" class="btn" onclick="openPagar('Alta Rotación')">Elegir este plan</button>
+    </div>
+    <div class="pricing-card">
+      <p class="pricing-name">Suscripción Rotación Mensual</p>
+      <p class="pricing-credits">5 créditos / mes, acumulables hasta 2 meses</p>
+      <p class="pricing-amount">$280.000<span style="font-size:14px;font-weight:700;">/mes</span></p>
+      <p class="pricing-per-credit">~$56.000 CLP / crédito</p>
+      <button type="button" class="btn" onclick="openPagar('Suscripción Rotación Mensual')">Elegir este plan</button>
+    </div>
+  </div>
+  <p class="pricing-note">¿Qué es un crédito? Un match confirmado entre tu empresa y un candidato. Los créditos no vencen (salvo la Suscripción Rotación Mensual, que acumula hasta 2 meses). Si el match no prospera dentro de 90 días, lo reponemos sin cobrar de nuevo.</p>
+</section>
+
+<section class="demo">
+  <div class="demo-intro">
+    <h2>Así se ve un match certero</h2>
+    <p>El candidato confirma, la empresa confirma, y solo entonces se comparte el contacto — todo dentro de la misma conversación de WhatsApp que la pyme ya usa a diario.</p>
+  </div>
+  <div class="demo-timeline">
+    <div class="tl-step step-a"><span class="tl-dot">1</span><span class="tl-label">Candidato<br>confirma</span></div>
+    <div class="tl-line line-1"></div>
+    <div class="tl-step step-b"><span class="tl-dot">2</span><span class="tl-label">Empresa<br>confirma</span></div>
+    <div class="tl-line line-2"></div>
+    <div class="tl-step step-c"><span class="tl-dot">✓</span><span class="tl-label">Contacto<br>compartido</span></div>
+  </div>
+  <div class="phone">
+    <div class="phone-head">
+      <div class="chat-avatar">
+        <svg viewBox="0 0 100 100"><path d="M22 68 C 30 68, 40 60, 50 40"/><path class="two" d="M78 68 C 70 68, 60 60, 50 40"/></svg>
+      </div>
+      <div><strong>Certero</strong><span>en línea</span></div>
+    </div>
+    <div class="bubble bot">Confirmaste tú, confirmó la empresa.</div>
+    <div class="bubble match">✓ Match confirmado — contacto compartido</div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand">certero</div>
+  <nav class="footer-links">
+    <a href="./privacidad/index.html">Política de Privacidad</a>
+    <a href="./terminos/index.html">Términos de Servicio</a>
+    <a href="mailto:soporte@certerospa.cl">Contacto</a>
+  </nav>
+  <p class="footer-copy">© 2026 Certero SpA. Todos los derechos reservados.</p>
+</footer>
+
+<div class="modal-overlay" id="modal-contratar" onclick="if(event.target===this) closeModal('contratar')">
+  <div class="modal-card">
+    <button type="button" class="modal-close" onclick="closeModal('contratar')" aria-label="Cerrar">✕</button>
+    <h3>¿Ya tienes un plan de créditos activo con Certero?</h3>
+    <div class="modal-actions">
+      <a class="btn btn-primary" href="https://wa.me/{{WHATSAPP_NUMERO}}?text=Hola%2C%20ya%20tengo%20un%20plan%20activo%20y%20quiero%20contratar%20a%20trav%C3%A9s%20de%20Certero">Sí, hablar con el asistente</a>
+      <button type="button" class="btn" onclick="closeModal('contratar'); scrollToPricing();">No, quiero ver los planes</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-pagar" onclick="if(event.target===this) closeModal('pagar')">
+  <div class="modal-card modal-card--wide">
+    <button type="button" class="modal-close" onclick="closeModal('pagar')" aria-label="Cerrar">✕</button>
+    <h3>Cómo paga tu empresa</h3>
+    <span class="modal-plan-label" id="modal-pagar-plan"></span>
+    <ul class="modal-pay-list">
+      <li><strong>Transferencia bancaria en línea</strong> — pago en línea a través de Flow.</li>
+      <li><strong>Tarjeta de crédito o débito</strong> — pago en línea a través de Flow.</li>
+      <li><strong>Orden de compra a 30 días</strong> — nos das los datos de tu empresa, te emitimos la factura de inmediato, y cerca del vencimiento te llega un link para transferir en línea.</li>
+    </ul>
+    <p class="modal-pay-note">Hoy coordinamos el pago directo por WhatsApp mientras terminamos de conectar el pago en línea automático.</p>
+    <a class="btn btn-primary" id="modal-pagar-cta" href="https://wa.me/{{WHATSAPP_NUMERO}}">Escribir por WhatsApp</a>
+  </div>
+</div>
+
+<script>
+  function openContratar(){
+    document.getElementById('modal-contratar').classList.add('open');
+  }
+  function closeModal(name){
+    document.getElementById('modal-' + name).classList.remove('open');
+  }
+  function scrollToPricing(){
+    var el = document.getElementById('precios');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+  function openPagar(plan){
+    document.getElementById('modal-pagar-plan').textContent = 'Plan seleccionado: ' + plan;
+    var msg = encodeURIComponent('Hola, quiero el plan ' + plan + ' de Certero, ¿cómo pago?');
+    document.getElementById('modal-pagar-cta').href = 'https://wa.me/{{WHATSAPP_NUMERO}}?text=' + msg;
+    document.getElementById('modal-pagar').classList.add('open');
+  }
+</script>
+
+</body>
+</html>

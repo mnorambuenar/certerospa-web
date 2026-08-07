@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Política de Privacidad — Certero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0E6F6B;
+    --teal-deep:#0A4A47;
+    --coral:#FF6B4A;
+    --bone:#FAF7F2;
+    --white:#FFFFFF;
+    --ink:#1B231F;
+    --stone:#5B6663;
+    --mist:#E4F1EF;
+  }
+  :root[data-theme="dark"]{
+    --bone:#0E1614;
+    --white:#16211E;
+    --ink:#F3F1EA;
+    --stone:#9FB0AC;
+    --mist:#173330;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bone:#0E1614;
+      --white:#16211E;
+      --ink:#F3F1EA;
+      --stone:#9FB0AC;
+      --mist:#173330;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Karla','Inter',system-ui,sans-serif;
+    background:var(--bone);
+    color:var(--ink);
+  }
+  h1,h2,.logotype{ font-family:'Manrope',system-ui,sans-serif; }
+  a{ color:var(--teal-deep); }
+
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    border-bottom:1px solid color-mix(in srgb, var(--stone) 20%, transparent);
+  }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .mark{ width:36px; height:36px; flex-shrink:0; }
+  .mark-bg{ fill:var(--teal); }
+  .mark-stroke{ fill:none; stroke:var(--white); stroke-width:9; stroke-linecap:round; }
+  .logotype{ font-weight:800; font-size:20px; letter-spacing:-0.02em; color:var(--ink); }
+  .back-link{ font-size:14px; color:var(--stone); text-decoration:none; white-space:nowrap; }
+  .back-link:hover{ color:var(--ink); }
+  @media (max-width:480px){
+    header{ flex-wrap:wrap; gap:10px; padding:16px 20px; }
+    .back-link{ font-size:13px; }
+  }
+
+  main{
+    max-width:720px;
+    margin:0 auto;
+    padding:clamp(40px,6vw,72px) clamp(20px,5vw,24px) clamp(64px,8vw,96px);
+  }
+  main h1{
+    font-size:clamp(28px,3.6vw,38px);
+    font-weight:800;
+    margin:0 0 8px;
+  }
+  main .updated{
+    color:var(--stone);
+    font-size:13.5px;
+    margin:0 0 40px;
+  }
+  main h2{
+    font-size:19px;
+    font-weight:800;
+    margin:36px 0 12px;
+    color:var(--teal-deep);
+  }
+  main p, main li{
+    font-size:15.5px;
+    line-height:1.7;
+    color:var(--ink);
+  }
+  main ul{ padding-left:20px; margin:0 0 12px; }
+  main li{ margin-bottom:6px; }
+
+  footer.site-footer{
+    padding:44px clamp(20px,5vw,64px) 48px;
+    text-align:center;
+    border-top:1px solid color-mix(in srgb, var(--stone) 20%, transparent);
+  }
+  .footer-brand{ font-family:'Manrope',sans-serif; font-weight:800; font-size:16px; margin-bottom:14px; }
+  .footer-links{ display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:16px; }
+  .footer-links a{ font-size:13.5px; color:var(--stone); text-decoration:none; }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-copy{ color:var(--stone); font-size:12.5px; margin:0; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 100 100">
+      <rect class="mark-bg" x="0" y="0" width="100" height="100" rx="26"/>
+      <path class="mark-stroke" d="M22 68 C 30 68, 40 60, 50 40"/>
+      <path class="mark-stroke" d="M78 68 C 70 68, 60 60, 50 40"/>
+    </svg>
+    <span class="logotype">certero</span>
+  </a>
+  <a class="back-link" href="../index.html">← Volver al inicio</a>
+</header>
+
+<main>
+  <h1>Política de Privacidad</h1>
+  <p class="updated">Última actualización: agosto de 2026 · Certero SpA</p>
+
+  <p>Certero es una herramienta de matching directo entre personas que buscan trabajo y pymes chilenas que necesitan contratar, conversando por WhatsApp. Esta política explica qué datos pedimos, para qué los usamos y qué derechos tienes sobre ellos.</p>
+
+  <h2>Qué datos recopilamos</h2>
+  <p>A través de la conversación de intake por WhatsApp, pedimos solo lo necesario para proponer un match:</p>
+  <ul>
+    <li>Nombre y número de teléfono</li>
+    <li>Cargo o tipo de vacante que buscas u ofreces</li>
+    <li>Comuna</li>
+    <li>Renta esperada u ofrecida (si la entregas)</li>
+    <li>Disponibilidad</li>
+  </ul>
+  <p>Te lo decimos en el primer mensaje del asistente, antes de pedirte nada: qué información necesitamos y para qué.</p>
+
+  <h2>Para qué usamos tus datos</h2>
+  <p>Usamos estos datos exclusivamente para proponer coincidencias (matches) entre candidatos y vacantes, según cargo, comuna, renta y disponibilidad. Tu contacto directo (número de teléfono) nunca se comparte con la otra parte hasta que ambos confirmen el mismo match — antes de eso, tu perfil se mantiene anónimo frente a la otra parte.</p>
+
+  <h2>Base de licitud</h2>
+  <p>Tratamos tus datos bajo la base de ejecución de contrato / interés legítimo para poder ofrecerte el servicio de matching que solicitaste, con un análisis de ponderación (balancing test) de ese interés legítimo documentado internamente.</p>
+
+  <h2>Con quién compartimos datos</h2>
+  <p>Trabajamos con terceros que actúan como encargados de tratamiento de datos en nuestro nombre, no como dueños de tus datos:</p>
+  <ul>
+    <li>Meta (WhatsApp), para el transporte de los mensajes de la conversación</li>
+    <li>Nuestro proveedor de modelo de lenguaje (LLM), para procesar la conversación de intake</li>
+    <li>Supabase, para el almacenamiento de la base de datos</li>
+  </ul>
+  <p>Estos proveedores pueden procesar datos fuera de Chile. Cuando una empresa confirma un match con tu perfil, esa empresa pasa a ser responsable de su propia copia de tus datos de contacto — este punto también queda detallado en nuestros <a href="../terminos/index.html">Términos de Servicio</a>.</p>
+
+  <h2>Cuánto tiempo retenemos tus datos</h2>
+  <ul>
+    <li>Perfiles inactivos: se avisa a los 12 meses sin actividad antes de eliminarlos.</li>
+    <li>Matches propuestos que expiran sin confirmarse: se eliminan a los 6 meses.</li>
+  </ul>
+
+  <h2>Tus derechos (ARCOP)</h2>
+  <p>Puedes solicitar en cualquier momento: acceder a tus datos, rectificarlos, cancelarlos (eliminarlos), oponerte a su tratamiento, o pedir su portabilidad. Si ejerces tu derecho de cancelación, el puntaje agregado de reputación que hayas generado se conserva de forma anónima, pero el texto de tus comentarios se elimina y tu número queda en una lista de supresión para evitar que se reinicie tu reputación con una cuenta nueva.</p>
+  <p>Para ejercer cualquiera de estos derechos, escríbenos a <a href="mailto:soporte@certerospa.cl">soporte@certerospa.cl</a>.</p>
+
+  <h2>Marco legal</h2>
+  <p>Esta política se enmarca en la Ley N° 21.719 de Protección de Datos Personales de Chile, vigente desde el 1 de diciembre de 2026.</p>
+
+  <h2>Estado actual del servicio</h2>
+  <p>Certero opera hoy en fase piloto (Fase 0): el matching lo realiza un equipo humano con apoyo de un asistente conversacional, no un sistema completamente automatizado ni certificado bajo estándares como ISO. Aplicamos medidas de seguridad razonables sobre la información que manejamos, acordes a esta etapa del producto.</p>
+
+  <h2>Cambios a esta política</h2>
+  <p>Podemos actualizar esta política a medida que el servicio evolucione. Publicaremos cualquier cambio relevante en esta misma página.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">certero</div>
+  <nav class="footer-links">
+    <a href="../privacidad/index.html">Política de Privacidad</a>
+    <a href="../terminos/index.html">Términos de Servicio</a>
+    <a href="mailto:soporte@certerospa.cl">Contacto</a>
+  </nav>
+  <p class="footer-copy">© 2026 Certero SpA. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>

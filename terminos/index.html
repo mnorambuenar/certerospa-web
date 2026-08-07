@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Términos de Servicio — Certero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0E6F6B;
+    --teal-deep:#0A4A47;
+    --coral:#FF6B4A;
+    --bone:#FAF7F2;
+    --white:#FFFFFF;
+    --ink:#1B231F;
+    --stone:#5B6663;
+    --mist:#E4F1EF;
+  }
+  :root[data-theme="dark"]{
+    --bone:#0E1614;
+    --white:#16211E;
+    --ink:#F3F1EA;
+    --stone:#9FB0AC;
+    --mist:#173330;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bone:#0E1614;
+      --white:#16211E;
+      --ink:#F3F1EA;
+      --stone:#9FB0AC;
+      --mist:#173330;
+    }
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Karla','Inter',system-ui,sans-serif;
+    background:var(--bone);
+    color:var(--ink);
+  }
+  h1,h2,.logotype{ font-family:'Manrope',system-ui,sans-serif; }
+  a{ color:var(--teal-deep); }
+
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    border-bottom:1px solid color-mix(in srgb, var(--stone) 20%, transparent);
+  }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .mark{ width:36px; height:36px; flex-shrink:0; }
+  .mark-bg{ fill:var(--teal); }
+  .mark-stroke{ fill:none; stroke:var(--white); stroke-width:9; stroke-linecap:round; }
+  .logotype{ font-weight:800; font-size:20px; letter-spacing:-0.02em; color:var(--ink); }
+  .back-link{ font-size:14px; color:var(--stone); text-decoration:none; white-space:nowrap; }
+  .back-link:hover{ color:var(--ink); }
+  @media (max-width:480px){
+    header{ flex-wrap:wrap; gap:10px; padding:16px 20px; }
+    .back-link{ font-size:13px; }
+  }
+
+  main{
+    max-width:720px;
+    margin:0 auto;
+    padding:clamp(40px,6vw,72px) clamp(20px,5vw,24px) clamp(64px,8vw,96px);
+  }
+  main h1{
+    font-size:clamp(28px,3.6vw,38px);
+    font-weight:800;
+    margin:0 0 8px;
+  }
+  main .updated{
+    color:var(--stone);
+    font-size:13.5px;
+    margin:0 0 40px;
+  }
+  main h2{
+    font-size:19px;
+    font-weight:800;
+    margin:36px 0 12px;
+    color:var(--teal-deep);
+  }
+  main p, main li{
+    font-size:15.5px;
+    line-height:1.7;
+    color:var(--ink);
+  }
+  main ul{ padding-left:20px; margin:0 0 12px; }
+  main li{ margin-bottom:6px; }
+
+  footer.site-footer{
+    padding:44px clamp(20px,5vw,64px) 48px;
+    text-align:center;
+    border-top:1px solid color-mix(in srgb, var(--stone) 20%, transparent);
+  }
+  .footer-brand{ font-family:'Manrope',sans-serif; font-weight:800; font-size:16px; margin-bottom:14px; }
+  .footer-links{ display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:16px; }
+  .footer-links a{ font-size:13.5px; color:var(--stone); text-decoration:none; }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-copy{ color:var(--stone); font-size:12.5px; margin:0; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="../index.html">
+    <svg class="mark" viewBox="0 0 100 100">
+      <rect class="mark-bg" x="0" y="0" width="100" height="100" rx="26"/>
+      <path class="mark-stroke" d="M22 68 C 30 68, 40 60, 50 40"/>
+      <path class="mark-stroke" d="M78 68 C 70 68, 60 60, 50 40"/>
+    </svg>
+    <span class="logotype">certero</span>
+  </a>
+  <a class="back-link" href="../index.html">← Volver al inicio</a>
+</header>
+
+<main>
+  <h1>Términos de Servicio</h1>
+  <p class="updated">Última actualización: agosto de 2026 · Certero SpA</p>
+
+  <h2>Qué es Certero</h2>
+  <p>Certero es una plataforma de matching directo entre personas que buscan trabajo (candidatos) y pymes que necesitan contratar (empresas), operada por WhatsApp mediante un asistente conversacional. Certero <strong>no es una agencia de colocación ni de reclutamiento tradicional</strong>, y no es parte del contrato de trabajo que eventualmente se celebre entre candidato y empresa.</p>
+
+  <h2>Uso gratuito para candidatos</h2>
+  <p>El uso de Certero es y será siempre gratuito para las personas que buscan trabajo.</p>
+
+  <h2>Créditos y pago para empresas</h2>
+  <p>Las empresas acceden a Certero comprando créditos por adelantado (ver <a href="../index.html#precios">planes y precios</a>). Cada match confirmado por ambas partes consume un crédito. Los créditos no vencen, salvo los incluidos en la Suscripción Rotación Mensual, que se acumulan hasta por 2 meses si no se usan.</p>
+
+  <h2>Garantía de reposición de 90 días</h2>
+  <p>Cada crédito consumido incluye una garantía de reposición: si la empresa reporta, dentro de los 90 días siguientes a la confirmación del match, que la relación con el candidato no prosperó, Certero propone un nuevo match para esa misma vacante sin consumir un crédito adicional. El reporte se realiza en lenguaje natural, dentro de la misma conversación de WhatsApp con el asistente.</p>
+
+  <h2>Sin garantía de contratación</h2>
+  <p>Certero facilita el encuentro y la coordinación inicial entre candidato y empresa. Certero no garantiza que una contratación efectivamente ocurra, ni que una contratación realizada se sostenga en el tiempo, más allá del mecanismo de garantía de reposición descrito arriba.</p>
+
+  <h2>Responsabilidad sobre los datos tras un match</h2>
+  <p>Una vez que un match es confirmado por ambas partes y se comparte el contacto, la empresa que recibe el perfil de un candidato pasa a ser responsable de su propia copia de esos datos, conforme a la normativa de protección de datos personales vigente. Ver nuestra <a href="../privacidad/index.html">Política de Privacidad</a> para más detalle sobre el tratamiento de datos por parte de Certero.</p>
+
+  <h2>Moderación y reglas de contenido</h2>
+  <p>Certero modera perfiles y vacantes para evitar contenido discriminatorio o contrario a la legislación laboral chilena. Un perfil o vacante que no cumpla estas reglas no será propuesto para match.</p>
+
+  <h2>Modificación de estos términos</h2>
+  <p>Podemos actualizar estos términos a medida que el servicio evolucione. Publicaremos cualquier cambio relevante en esta misma página.</p>
+
+  <h2>Ley aplicable</h2>
+  <p>Estos términos se rigen por las leyes de la República de Chile.</p>
+
+  <h2>Contacto</h2>
+  <p>Ante cualquier duda sobre estos términos, escríbenos a <a href="mailto:soporte@certerospa.cl">soporte@certerospa.cl</a>.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-brand">certero</div>
+  <nav class="footer-links">
+    <a href="../privacidad/index.html">Política de Privacidad</a>
+    <a href="../terminos/index.html">Términos de Servicio</a>
+    <a href="mailto:soporte@certerospa.cl">Contacto</a>
+  </nav>
+  <p class="footer-copy">© 2026 Certero SpA. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>
