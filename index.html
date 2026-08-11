@@ -291,7 +291,18 @@
     23%{ opacity:0; transform:translateY(-14px) scale(.85); }
   }
   @media (max-width:480px){
-    .attr-chip{ display:none; }
+    .attr-chip{
+      font-size:10px;
+      padding:6px 9px;
+      gap:5px;
+    }
+    .attr-chip.a1{ top:0%;    left:0%; }
+    .attr-chip.a2{ top:22%;   left:-2%; }
+    .attr-chip.a3{ top:46%;   left:0%; }
+    .attr-chip.a4{ top:70%;   left:-2%; }
+    .attr-chip.b1{ bottom:0%;  right:0%; }
+    .attr-chip.b2{ bottom:24%; right:-2%; }
+    .attr-chip.b3{ bottom:48%; right:0%; }
   }
 
   /* ---------- entry points ---------- */
