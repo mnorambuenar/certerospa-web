@@ -876,22 +876,6 @@
     margin:0 0 18px;
     padding-right:20px;
   }
-  .modal-actions{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .modal-actions .btn{ justify-content:center; width:100%; }
-  .modal-plan-label{
-    font-size:13.5px;
-    font-weight:700;
-    color:var(--teal-deep);
-    background:var(--mist);
-    display:inline-block;
-    padding:5px 12px;
-    border-radius:999px;
-    margin:0 0 18px;
-  }
   .modal-pay-list{
     list-style:none;
     padding:0;
@@ -905,35 +889,17 @@
     border-bottom:1px solid color-mix(in srgb, var(--stone) 15%, transparent);
   }
   .modal-pay-list li:last-child{ border-bottom:none; }
+  .modal-pay-list a{
+    color:var(--teal-deep);
+    font-weight:700;
+    text-decoration:none;
+  }
+  .modal-pay-list a:hover{ text-decoration:underline; }
   .modal-pay-note{
     font-size:13px;
     color:var(--stone);
     line-height:1.5;
     margin:0 0 20px;
-  }
-  #modal-pagar-cta{ width:100%; justify-content:center; }
-  .form-field{ margin-bottom:16px; text-align:left; }
-  .form-field label{
-    display:block;
-    font-size:13px;
-    font-weight:700;
-    color:var(--teal-deep);
-    margin-bottom:6px;
-  }
-  .form-field input, .form-field textarea{
-    width:100%;
-    border:1px solid color-mix(in srgb, var(--stone) 30%, transparent);
-    border-radius:12px;
-    padding:11px 13px;
-    font-family:inherit;
-    font-size:14.5px;
-    color:var(--ink);
-    background:var(--bone);
-    resize:vertical;
-  }
-  .form-field input:focus, .form-field textarea:focus{
-    outline:2px solid var(--teal);
-    outline-offset:1px;
   }
 </style>
 </head>
@@ -961,8 +927,8 @@
     <h1>Se encuentran. <span class="accent">Se confirman.</span><br>Se contactan.</h1>
     <p class="lead">Certero conecta directo a personas que buscan trabajo con empresas que necesitan contratar — sin CV, sin ranking automático, sin esperar 40 días. Tú decides con quién avanzar.</p>
     <div class="cta-row">
-      <button type="button" class="btn btn-primary" onclick="openRegistro('candidato')">Busco trabajo →</button>
-      <button type="button" class="btn btn-ghost" onclick="openContratar()">Quiero contratar →</button>
+      <button type="button" class="btn btn-primary" onclick="openAviso()">Busco trabajo →</button>
+      <button type="button" class="btn btn-ghost" onclick="openAviso()">Quiero contratar →</button>
     </div>
   </div>
   <div class="hero-visual">
@@ -1000,8 +966,8 @@
         <li>Match por cargo, comuna, renta y disponibilidad</li>
         <li>Contacto solo si ambos dicen que sí</li>
       </ul>
-      <button type="button" class="btn" onclick="openRegistro('candidato')">Completar mi registro</button>
-      <p class="entry-flow-note">Completas un formulario breve y te contactamos para armar tu perfil.</p>
+      <button type="button" class="btn" onclick="openAviso()">Contactar a Certero</button>
+      <p class="entry-flow-note">Estamos en fase de construcción — escríbenos o síguenos para enterarte apenas estemos listos.</p>
     </div>
     <div class="entry-card empresa">
       <div class="glow"></div>
@@ -1016,8 +982,8 @@
         <li>Reputación bidireccional después de cada encuentro</li>
         <li>Créditos por match, con garantía de reposición de 90 días</li>
       </ul>
-      <button type="button" class="btn" onclick="openContratar()">Empezar por WhatsApp</button>
-      <p class="entry-flow-note">Completas un formulario breve y te contactamos para describir tu vacante.</p>
+      <button type="button" class="btn" onclick="openAviso()">Contactar a Certero</button>
+      <p class="entry-flow-note">Estamos en fase de construcción — escríbenos o síguenos para enterarte apenas estemos listos.</p>
     </div>
   </div>
 </section>
@@ -1043,14 +1009,14 @@
       <p class="pricing-credits">1 crédito</p>
       <p class="pricing-amount">$78.000</p>
       <p class="pricing-per-credit">$78.000 CLP / crédito</p>
-      <button type="button" class="btn" onclick="openPagar('Individual')">Elegir este plan</button>
+      <button type="button" class="btn" onclick="openAviso()">Elegir este plan</button>
     </div>
     <div class="pricing-card">
       <p class="pricing-name">Esporádico</p>
       <p class="pricing-credits">3 créditos</p>
       <p class="pricing-amount">$215.000</p>
       <p class="pricing-per-credit">~$71.700 CLP / crédito</p>
-      <button type="button" class="btn" onclick="openPagar('Esporádico')">Elegir este plan</button>
+      <button type="button" class="btn" onclick="openAviso()">Elegir este plan</button>
     </div>
     <div class="pricing-card pricing-card--highlight">
       <span class="pricing-badge">Más elegido</span>
@@ -1058,14 +1024,14 @@
       <p class="pricing-credits">10 créditos</p>
       <p class="pricing-amount">$640.000</p>
       <p class="pricing-per-credit">~$64.000 CLP / crédito</p>
-      <button type="button" class="btn" onclick="openPagar('Alta Rotación')">Elegir este plan</button>
+      <button type="button" class="btn" onclick="openAviso()">Elegir este plan</button>
     </div>
     <div class="pricing-card">
       <p class="pricing-name">Suscripción Rotación Mensual</p>
       <p class="pricing-credits">5 créditos / mes, acumulables hasta 2 meses</p>
       <p class="pricing-amount">$280.000<span style="font-size:14px;font-weight:700;">/mes</span></p>
       <p class="pricing-per-credit">~$56.000 CLP / crédito</p>
-      <button type="button" class="btn" onclick="openPagar('Suscripción Rotación Mensual')">Elegir este plan</button>
+      <button type="button" class="btn" onclick="openAviso()">Elegir este plan</button>
     </div>
   </div>
   <p class="pricing-note">¿Qué es un crédito? Un match confirmado entre tu empresa y un candidato. Los créditos no vencen (salvo la Suscripción Rotación Mensual, que acumula hasta 2 meses). Si el match no prospera dentro de 90 días, lo reponemos sin cobrar de nuevo.</p>
@@ -1105,119 +1071,27 @@
   <p class="footer-copy">© 2026 Certero SpA. Todos los derechos reservados.</p>
 </footer>
 
-<div class="modal-overlay" id="modal-contratar" onclick="if(event.target===this) closeModal('contratar')">
-  <div class="modal-card">
-    <button type="button" class="modal-close" onclick="closeModal('contratar')" aria-label="Cerrar">✕</button>
-    <h3>¿Ya tienes un plan de créditos activo con Certero?</h3>
-    <div class="modal-actions">
-      <button type="button" class="btn btn-primary" onclick="closeModal('contratar'); openRegistro('empresa');">Sí, completar registro</button>
-      <button type="button" class="btn" onclick="closeModal('contratar'); scrollToPricing();">No, quiero ver los planes</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-pagar" onclick="if(event.target===this) closeModal('pagar')">
+<div class="modal-overlay" id="modal-aviso" onclick="if(event.target===this) closeModal('aviso')">
   <div class="modal-card modal-card--wide">
-    <button type="button" class="modal-close" onclick="closeModal('pagar')" aria-label="Cerrar">✕</button>
-    <h3>Cómo paga tu empresa</h3>
-    <span class="modal-plan-label" id="modal-pagar-plan"></span>
+    <button type="button" class="modal-close" onclick="closeModal('aviso')" aria-label="Cerrar">✕</button>
+    <h3>Estamos en fase de construcción</h3>
+    <p class="modal-pay-note">Certero todavía está armando su primera versión. Si te interesa, escríbenos directo o síguenos en nuestras redes — te avisamos apenas estemos listos.</p>
     <ul class="modal-pay-list">
-      <li><strong>Transferencia bancaria en línea</strong> — pago en línea a través de Flow.</li>
-      <li><strong>Tarjeta de crédito o débito</strong> — pago en línea a través de Flow.</li>
-      <li><strong>Orden de compra a 30 días</strong> — nos das los datos de tu empresa, te emitimos la factura de inmediato, y cerca del vencimiento te llega un link para transferir en línea.</li>
+      <li><a href="mailto:soporte@certerospa.cl">Escríbenos a soporte@certerospa.cl</a></li>
+      <li><a href="https://www.instagram.com/certerospa" target="_blank" rel="noopener">Instagram — @certerospa</a></li>
+      <li><a href="https://www.tiktok.com/@certerospa" target="_blank" rel="noopener">TikTok — @certerospa</a></li>
+      <li><a href="https://www.youtube.com/@certerospa" target="_blank" rel="noopener">YouTube — @certerospa</a></li>
     </ul>
-    <p class="modal-pay-note">Hoy coordinamos el pago directo por correo mientras terminamos de conectar el pago en línea automático.</p>
-    <button type="button" class="btn btn-primary" id="modal-pagar-cta">Completar registro por correo</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-registro" onclick="if(event.target===this) closeModal('registro')">
-  <div class="modal-card modal-card--wide">
-    <button type="button" class="modal-close" onclick="closeModal('registro')" aria-label="Cerrar">✕</button>
-    <div id="registro-form-wrap">
-      <h3 id="modal-registro-title">Cuéntanos qué buscas</h3>
-      <form id="modal-registro-form" onsubmit="enviarRegistro(event)">
-        <div class="form-field">
-          <label for="registro-nombre">Nombre</label>
-          <input type="text" id="registro-nombre" required>
-        </div>
-        <div class="form-field">
-          <label for="registro-contacto">Teléfono o correo de contacto</label>
-          <input type="text" id="registro-contacto" required>
-        </div>
-        <div class="form-field">
-          <label for="registro-mensaje">Mensaje</label>
-          <textarea id="registro-mensaje" rows="4"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Enviar por correo</button>
-      </form>
-    </div>
-    <div id="registro-confirmacion" style="display:none;">
-      <h3>Se abrió tu correo</h3>
-      <p class="modal-pay-note">Tu mensaje quedó listo para enviar a <strong>soporte@certerospa.cl</strong>. Si no se abrió tu cliente de correo automáticamente, escríbenos directo a esa dirección.</p>
-      <button type="button" class="btn" style="width:100%;justify-content:center;" onclick="closeModal('registro')">Cerrar</button>
-    </div>
+    <button type="button" class="btn" style="width:100%;justify-content:center;" onclick="closeModal('aviso')">Cerrar</button>
   </div>
 </div>
 
 <script>
-  function openContratar(){
-    document.getElementById('modal-contratar').classList.add('open');
-  }
   function closeModal(name){
     document.getElementById('modal-' + name).classList.remove('open');
   }
-  function scrollToPricing(){
-    var el = document.getElementById('precios');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
-  var pagarPlanActual = null;
-  function openPagar(plan){
-    pagarPlanActual = plan;
-    document.getElementById('modal-pagar-plan').textContent = 'Plan seleccionado: ' + plan;
-    document.getElementById('modal-pagar-cta').onclick = function(){
-      closeModal('pagar');
-      openRegistro('empresa', plan);
-    };
-    document.getElementById('modal-pagar').classList.add('open');
-  }
-
-  function openRegistro(rol, plan){
-    document.getElementById('registro-form-wrap').style.display = '';
-    document.getElementById('registro-confirmacion').style.display = 'none';
-    document.getElementById('modal-registro-form').reset();
-    document.getElementById('modal-registro-form').dataset.rol = rol;
-    document.getElementById('modal-registro-form').dataset.plan = plan || '';
-    var mensaje = '';
-    if (rol === 'candidato') {
-      document.getElementById('modal-registro-title').textContent = 'Cuéntanos qué buscas';
-      mensaje = 'Hola, busco trabajo y quiero partir con Certero. Cargo que busco: \nComuna: \nDisponibilidad: ';
-    } else if (plan) {
-      document.getElementById('modal-registro-title').textContent = 'Completa tu registro — plan ' + plan;
-      mensaje = 'Hola, quiero el plan ' + plan + ' de Certero. Mi empresa: \n¿Cómo pago?: ';
-    } else {
-      document.getElementById('modal-registro-title').textContent = 'Cuéntanos tu vacante';
-      mensaje = 'Hola, quiero contratar a través de Certero. Mi empresa: \nVacante: ';
-    }
-    document.getElementById('registro-mensaje').value = mensaje;
-    document.getElementById('modal-registro').classList.add('open');
-  }
-
-  function enviarRegistro(event){
-    event.preventDefault();
-    var form = document.getElementById('modal-registro-form');
-    var rol = form.dataset.rol === 'candidato' ? 'Busco trabajo' : 'Quiero contratar';
-    var plan = form.dataset.plan;
-    var nombre = document.getElementById('registro-nombre').value;
-    var contacto = document.getElementById('registro-contacto').value;
-    var mensaje = document.getElementById('registro-mensaje').value;
-    var asunto = 'Certero — ' + rol + (plan ? ' (plan ' + plan + ')' : '');
-    var cuerpo = 'Nombre: ' + nombre + '\nContacto: ' + contacto + '\n\n' + mensaje;
-    var mailtoLink = 'mailto:soporte@certerospa.cl?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
-    window.location.href = mailtoLink;
-    document.getElementById('registro-form-wrap').style.display = 'none';
-    document.getElementById('registro-confirmacion').style.display = '';
-    return false;
+  function openAviso(){
+    document.getElementById('modal-aviso').classList.add('open');
   }
 </script>
 
