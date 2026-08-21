@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Certero — Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Karla:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0E6F6B; --teal-deep:#0A4A47; --coral:#FF6B4A; --amber:#F2B705;
+    --bone:#FAF7F2; --ink:#1C2A28; --stone:#6B7B78; --mist:#E4F1EF; --radius-md:10px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Karla','Inter',system-ui,sans-serif;background:var(--bone);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;}
+  h1,h2,h3{font-family:'Manrope',system-ui,sans-serif;}
+  .volver{align-self:flex-start;max-width:420px;width:100%;margin:0 auto 12px;color:var(--stone);text-decoration:none;font-size:13.5px;}
+  .volver:hover{color:var(--teal-deep);}
+  .center{flex:1;display:flex;align-items:center;justify-content:center;width:100%;}
+  .card{background:#fff;border-radius:16px;padding:28px;max-width:420px;width:100%;box-shadow:0 8px 24px rgba(10,74,71,0.08);}
+  .card h1{font-size:20px;margin:0 0 4px;color:var(--teal-deep);}
+  .card p.hint{color:var(--stone);font-size:13.5px;margin:0 0 18px;}
+  input{width:100%;padding:11px 14px;border:1px solid var(--mist);border-radius:var(--radius-md);font-size:14px;margin-bottom:12px;}
+  button{width:100%;padding:11px;border:none;border-radius:var(--radius-md);background:var(--teal);color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;}
+  button:hover{background:var(--teal-deep);}
+  button:disabled{opacity:0.6;cursor:default;}
+  .error{color:var(--coral);font-size:13px;margin-top:10px;display:none;}
+  .feed-wrap{max-width:640px;width:100%;}
+  .feed-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .feed-header button{width:auto;padding:8px 14px;background:var(--mist);color:var(--teal-deep);font-size:13px;}
+  .feed-header button:hover{background:var(--mist);opacity:0.85;}
+  .item{background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:12px;box-shadow:0 4px 14px rgba(10,74,71,0.06);}
+  .item .tipo{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;padding:2px 8px;border-radius:99px;margin-bottom:8px;}
+  .tipo.exacto{background:var(--mist);color:var(--teal-deep);}
+  .tipo.familia_afin{background:#FDEFC8;color:#8A6200;}
+  .tipo.propuesta_libre{background:#FFE1D6;color:#B4401F;}
+  .item dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 12px;font-size:13.5px;}
+  .item dt{color:var(--stone);}
+  .item dd{margin:0;}
+  .item button{width:auto;padding:8px 16px;font-size:13.5px;}
+  .empty{color:var(--stone);text-align:center;padding:40px 0;}
+</style>
+</head>
+<body>
+
+<a class="volver" href="../">← Volver a certerospa.cl</a>
+
+<div class="center">
+<div id="vista-login" class="card">
+  <h1>Portal Certero</h1>
+  <p class="hint">Ingresa tu código de perfil (ej. P-AB12CD) para ver coincidencias y mostrar interés directamente.</p>
+  <div id="paso-codigo">
+    <input id="input-codigo" placeholder="P-XXXXXX" autocomplete="off" />
+    <button id="btn-pedir-otp">Enviar código por WhatsApp</button>
+  </div>
+  <div id="paso-otp" style="display:none">
+    <input id="input-otp" placeholder="Código de 6 dígitos" autocomplete="off" inputmode="numeric" />
+    <button id="btn-verificar-otp">Ingresar</button>
+  </div>
+  <div id="login-error" class="error"></div>
+</div>
+
+<div id="vista-feed" class="feed-wrap" style="display:none">
+  <div class="feed-header">
+    <h1 style="margin:0">Coincidencias</h1>
+    <button id="btn-logout">Salir</button>
+  </div>
+  <div id="feed-lista"></div>
+</div>
+</div>
+
+<script>
+var API = "https://certero-app.fly.dev";
+var TIPO_LABEL = { exacto: "Calce exacto", familia_afin: "Rubro afín", propuesta_libre: "Categoría propuesta" };
+
+function guardarToken(token) { localStorage.setItem("portalToken", token); }
+function leerToken() { return localStorage.getItem("portalToken"); }
+function borrarToken() { localStorage.removeItem("portalToken"); }
+
+function mostrarError(mensaje) {
+  var el = document.getElementById("login-error");
+  el.textContent = mensaje;
+  el.style.display = "block";
+}
+function ocultarError() {
+  document.getElementById("login-error").style.display = "none";
+}
+
+var codigoActual = "";
+
+document.getElementById("btn-pedir-otp").addEventListener("click", function () {
+  ocultarError();
+  var codigo = document.getElementById("input-codigo").value.trim().toUpperCase();
+  if (!codigo) return;
+  codigoActual = codigo;
+  var boton = document.getElementById("btn-pedir-otp");
+  boton.disabled = true;
+  fetch(API + "/api/portal/login/start", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ referenceCode: codigo })
+  })
+    .then(function (r) { return r.json().then(function (body) { return { status: r.status, body: body }; }); })
+    .then(function (res) {
+      boton.disabled = false;
+      if (res.status !== 200) { mostrarError(res.body.error || "No pudimos procesar tu solicitud."); return; }
+      document.getElementById("paso-codigo").style.display = "none";
+      document.getElementById("paso-otp").style.display = "block";
+    })
+    .catch(function () { boton.disabled = false; mostrarError("Error de conexión, intenta de nuevo."); });
+});
+
+document.getElementById("btn-verificar-otp").addEventListener("click", function () {
+  ocultarError();
+  var otp = document.getElementById("input-otp").value.trim();
+  if (!otp) return;
+  var boton = document.getElementById("btn-verificar-otp");
+  boton.disabled = true;
+  fetch(API + "/api/portal/login/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ referenceCode: codigoActual, otp: otp })
+  })
+    .then(function (r) { return r.json().then(function (body) { return { status: r.status, body: body }; }); })
+    .then(function (res) {
+      boton.disabled = false;
+      if (res.status !== 200) { mostrarError(res.body.error || "Código inválido."); return; }
+      guardarToken(res.body.token);
+      mostrarFeed();
+    })
+    .catch(function () { boton.disabled = false; mostrarError("Error de conexión, intenta de nuevo."); });
+});
+
+document.getElementById("btn-logout").addEventListener("click", function () {
+  var token = leerToken();
+  fetch(API + "/api/portal/logout", { method: "POST", headers: { Authorization: "Bearer " + token } })
+    .catch(function () {})
+    .then(function () {
+      borrarToken();
+      document.getElementById("vista-feed").style.display = "none";
+      document.getElementById("vista-login").style.display = "block";
+      document.getElementById("paso-codigo").style.display = "block";
+      document.getElementById("paso-otp").style.display = "none";
+    });
+});
+
+function addCampo(dl, etiqueta, valor) {
+  if (valor === undefined || valor === null || valor === "") return;
+  var dt = document.createElement("dt");
+  dt.textContent = etiqueta;
+  var dd = document.createElement("dd");
+  dd.textContent = String(valor);
+  dl.appendChild(dt);
+  dl.appendChild(dd);
+}
+
+function renderFeed(respuesta) {
+  var lista = document.getElementById("feed-lista");
+  lista.innerHTML = "";
+
+  if (respuesta.matchActivo) {
+    var aviso = document.createElement("div");
+    aviso.className = "empty";
+    aviso.textContent = "Ya tienes una propuesta en curso — revisa tu WhatsApp para responderla antes de ver nuevas coincidencias.";
+    lista.appendChild(aviso);
+    return;
+  }
+
+  if (!respuesta.items || respuesta.items.length === 0) {
+    var vacio = document.createElement("div");
+    vacio.className = "empty";
+    vacio.textContent = "Todavía no hay coincidencias para tu perfil. Seguimos buscando automáticamente.";
+    lista.appendChild(vacio);
+    return;
+  }
+
+  respuesta.items.forEach(function (item) {
+    var card = document.createElement("div");
+    card.className = "item";
+
+    var tipoSpan = document.createElement("span");
+    tipoSpan.className = "tipo " + item.tipo;
+    tipoSpan.textContent = TIPO_LABEL[item.tipo] || item.tipo;
+    card.appendChild(tipoSpan);
+
+    var dl = document.createElement("dl");
+    var r = item.resumen || {};
+    addCampo(dl, "Cargo", r.cargo_estandarizado || r.cargo);
+    addCampo(dl, "Rubro", r.rubro);
+    addCampo(dl, "Comuna", r.comuna);
+    addCampo(dl, "Renta", r.rango_renta);
+    addCampo(dl, "Disponibilidad", r.disponibilidad);
+    addCampo(dl, "Jornada", r.jornada);
+    card.appendChild(dl);
+
+    var boton = document.createElement("button");
+    boton.textContent = "Me interesa";
+    boton.addEventListener("click", function () { mostrarInteres(item.perfilId, boton, card); });
+    card.appendChild(boton);
+
+    lista.appendChild(card);
+  });
+}
+
+function mostrarInteres(perfilObjetivoId, boton, card) {
+  boton.disabled = true;
+  fetch(API + "/api/portal/interest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + leerToken() },
+    body: JSON.stringify({ perfilObjetivoId: perfilObjetivoId })
+  })
+    .then(function (r) { return r.json().then(function (body) { return { status: r.status, body: body }; }); })
+    .then(function (res) {
+      var msg = document.createElement("p");
+      msg.style.marginTop = "10px";
+      msg.style.fontSize = "13px";
+      if (res.status === 200) {
+        msg.style.color = "#0E6F6B";
+        msg.textContent = "Le avisamos a la otra parte por WhatsApp. Código de referencia: " + res.body.codigoMatch;
+        boton.remove();
+      } else {
+        msg.style.color = "#FF6B4A";
+        msg.textContent = res.body.error || "No pudimos procesar tu solicitud.";
+        boton.disabled = false;
+      }
+      card.appendChild(msg);
+    })
+    .catch(function () { boton.disabled = false; });
+}
+
+function mostrarFeed() {
+  document.getElementById("vista-login").style.display = "none";
+  document.getElementById("vista-feed").style.display = "block";
+  fetch(API + "/api/portal/feed", { headers: { Authorization: "Bearer " + leerToken() } })
+    .then(function (r) {
+      if (r.status === 401) { borrarToken(); location.reload(); return null; }
+      return r.json();
+    })
+    .then(function (body) { if (body) renderFeed(body); });
+}
+
+if (leerToken()) mostrarFeed();
+</script>
+</body>
+</html>
