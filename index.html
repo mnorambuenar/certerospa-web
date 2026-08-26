@@ -5,7 +5,96 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Certero — Punto de encuentro</title>
 <meta name="description" content="Certero conecta directo a personas que buscan trabajo con pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Certero" />
+<meta property="og:title" content="Certero — Punto de encuentro" />
+<meta property="og:description" content="Certero conecta directo a personas que buscan trabajo con pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático." />
+<meta property="og:url" content="https://certerospa.cl/" />
+<meta property="og:locale" content="es_CL" />
+<meta property="og:image" content="https://certerospa.cl/assets/og-image.svg" />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Certero — Punto de encuentro" />
+<meta name="twitter:description" content="Certero conecta directo a personas que buscan trabajo con pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático." />
+<meta name="twitter:image" content="https://certerospa.cl/assets/og-image.svg" />
 <meta name="facebook-domain-verification" content="5fcwgvvdsx52fha8edpk64auafc1lb" />
+<link rel="canonical" href="https://certerospa.cl/" />
+<link rel="icon" type="image/svg+xml" href="./assets/logo-certero.svg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Certero",
+  "legalName": "Certero SpA",
+  "url": "https://certerospa.cl/",
+  "description": "Certero conecta directo a personas que buscan trabajo con pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático.",
+  "email": "soporte@certerospa.cl",
+  "areaServed": "CL",
+  "sameAs": [
+    "https://www.instagram.com/certerospa",
+    "https://www.tiktok.com/@certerospa",
+    "https://www.youtube.com/@certerospa"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es Certero?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Certero es el punto de encuentro directo entre personas que buscan trabajo y pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático. Cada match se confirma por ambas partes antes de compartir el contacto."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo funciona el matching de Certero?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Candidato y empresa conversan por WhatsApp con Certero, que arma el perfil de cada uno y propone coincidencias por cargo, comuna, renta y disponibilidad. El contacto solo se revela cuando ambas partes confirman el match."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es gratis para quien busca trabajo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, el candidato usa Certero gratis, siempre. Solo la empresa paga, y únicamente por match confirmado, no por publicar la vacante."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta contratar con Certero?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La empresa compra créditos por adelantado y paga por match confirmado. El plan Individual cuesta $78.000 CLP por crédito; los planes de mayor volumen bajan hasta cerca de $56.000 CLP por crédito."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si el match no prospera?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cada crédito trae garantía de reposición de 90 días: si la relación laboral no prospera dentro de ese plazo, Certero repone el match sin cobrar de nuevo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Certero ya está disponible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Certero está en fase de construcción de su primera versión. Quienes escriban a soporte@certerospa.cl o sigan sus redes (@certerospa) son avisados apenas esté disponible."
+      }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
@@ -902,6 +991,41 @@
     line-height:1.5;
     margin:0 0 20px;
   }
+  .faq{
+    max-width:720px;
+    margin:0 auto;
+    padding:64px 24px;
+  }
+  .faq h2{
+    text-align:center;
+    margin:0 0 32px;
+  }
+  .faq details{
+    background:var(--white);
+    border-radius:var(--radius-md);
+    padding:18px 22px;
+    margin-bottom:12px;
+  }
+  .faq summary{
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    color:var(--ink);
+    cursor:pointer;
+    list-style:none;
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::after{
+    content:"+";
+    float:right;
+    color:var(--teal);
+  }
+  .faq details[open] summary::after{ content:"–"; }
+  .faq p{
+    color:var(--stone);
+    font-size:15px;
+    line-height:1.6;
+    margin:12px 0 0;
+  }
 </style>
 </head>
 <body>
@@ -1061,6 +1185,34 @@
     <div class="bubble bot">Confirmaste tú, confirmó la empresa.</div>
     <div class="bubble match">✓ Match confirmado — contacto compartido</div>
   </div>
+</section>
+
+<section class="faq" id="preguntas">
+  <h2>Preguntas frecuentes</h2>
+  <details>
+    <summary>¿Qué es Certero?</summary>
+    <p>Certero es el punto de encuentro directo entre personas que buscan trabajo y pymes chilenas que necesitan contratar, por WhatsApp, sin CV ni ranking automático. Cada match se confirma por ambas partes antes de compartir el contacto.</p>
+  </details>
+  <details>
+    <summary>¿Cómo funciona el matching de Certero?</summary>
+    <p>Candidato y empresa conversan por WhatsApp con Certero, que arma el perfil de cada uno y propone coincidencias por cargo, comuna, renta y disponibilidad. El contacto solo se revela cuando ambas partes confirman el match.</p>
+  </details>
+  <details>
+    <summary>¿Es gratis para quien busca trabajo?</summary>
+    <p>Sí, el candidato usa Certero gratis, siempre. Solo la empresa paga, y únicamente por match confirmado, no por publicar la vacante.</p>
+  </details>
+  <details>
+    <summary>¿Cuánto cuesta contratar con Certero?</summary>
+    <p>La empresa compra créditos por adelantado y paga por match confirmado. El plan Individual cuesta $78.000 CLP por crédito; los planes de mayor volumen bajan hasta cerca de $56.000 CLP por crédito.</p>
+  </details>
+  <details>
+    <summary>¿Qué pasa si el match no prospera?</summary>
+    <p>Cada crédito trae garantía de reposición de 90 días: si la relación laboral no prospera dentro de ese plazo, Certero repone el match sin cobrar de nuevo.</p>
+  </details>
+  <details>
+    <summary>¿Certero ya está disponible?</summary>
+    <p>Certero está en fase de construcción de su primera versión. Quienes escriban a soporte@certerospa.cl o sigan sus redes (@certerospa) son avisados apenas esté disponible.</p>
+  </details>
 </section>
 
 <footer class="site-footer">

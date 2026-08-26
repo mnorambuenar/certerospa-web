@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Certero — logo de producción "El Punto de Encuentro"
+  Concepto direccional cerrado en marketing/branding_certero.md §2 (Etapa 4, validado por el usuario).
+  Dos trazos curvos que representan a candidato y empresa convergiendo en un único punto; el ángulo
+  de encuentro forma un check (✓) por pura geometría de la intersección, no como símbolo agregado.
+  Contenedor squircle (esquinas muy redondeadas), convención de ícono de app iOS/Android/WhatsApp.
+
+  Uso:
+  - Ícono de app / favicon / avatar de WhatsApp: usar tal cual (versión de color: trazo blanco sobre
+    fondo sólido Teal Certeza #0E6F6B — máximo contraste a tamaño mínimo).
+  - Superficie clara (papelería, header sobre fondo Hueso Cálido #FAF7F2): usar el grupo
+    "logo-certero-light" incluido más abajo en este mismo archivo (trazo Teal Certeza sobre squircle
+    transparente/hueso).
+  - Mono (una tinta, sellos/bordado): usar el grupo "logo-certero-mono" con currentColor.
+
+  Sin dependencias externas (sin fuentes, sin imágenes referenciadas) — 100% vectorial, escalable a
+  cualquier tamaño sin pérdida de nitidez, desde favicon 16px hasta señalética grande.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img"
+     aria-label="Certero — punto de encuentro">
+  <title>Certero</title>
+
+  <!-- ============ VERSIÓN PRINCIPAL: trazo blanco sobre fondo Teal Certeza ============ -->
+  <!-- Uso por defecto de este archivo: ícono de app, favicon, avatar de WhatsApp/dark mode. -->
+  <g id="logo-certero-principal">
+    <rect x="0" y="0" width="100" height="100" rx="26" fill="#0E6F6B"/>
+    <path d="M22 68 C 30 68, 40 60, 50 40" fill="none" stroke="#FFFFFF" stroke-width="9"
+          stroke-linecap="round"/>
+    <path d="M78 68 C 70 68, 60 60, 50 40" fill="none" stroke="#FFFFFF" stroke-width="9"
+          stroke-linecap="round"/>
+  </g>
+
+  <!-- ============ VERSIÓN CLARA: trazo Teal Certeza sobre fondo Hueso Cálido ============ -->
+  <!-- Uso: interfaz, papelería, documentos, cualquier superficie clara. Oculta por defecto -->
+  <!-- (display:none) para que este mismo archivo sirva como fuente única de las 3 versiones sin -->
+  <!-- que se dupliquen visualmente al insertarlo tal cual — quitar el atributo display o extraer -->
+  <!-- el grupo a un archivo/símbolo aparte según lo necesite la implementación final. -->
+  <g id="logo-certero-claro" display="none">
+    <rect x="0" y="0" width="100" height="100" rx="26" fill="#FAF7F2"/>
+    <path d="M22 68 C 30 68, 40 60, 50 40" fill="none" stroke="#0E6F6B" stroke-width="9"
+          stroke-linecap="round"/>
+    <path d="M78 68 C 70 68, 60 60, 50 40" fill="none" stroke="#0E6F6B" stroke-width="9"
+          stroke-linecap="round"/>
+  </g>
+
+  <!-- ============ VERSIÓN MONO: una sola tinta (currentColor), sin fondo ============ -->
+  <!-- Uso: sellos, bordado, fax de contratos, cualquier reproducción de una sola tinta. Coloca el -->
+  <!-- color heredándolo de un elemento padre (ej. color:#000 en CSS) al insertar este grupo. -->
+  <g id="logo-certero-mono" display="none">
+    <path d="M22 68 C 30 68, 40 60, 50 40" fill="none" stroke="currentColor" stroke-width="9"
+          stroke-linecap="round"/>
+    <path d="M78 68 C 70 68, 60 60, 50 40" fill="none" stroke="currentColor" stroke-width="9"
+          stroke-linecap="round"/>
+  </g>
+</svg>
