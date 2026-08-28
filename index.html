@@ -1026,6 +1026,144 @@
     line-height:1.6;
     margin:12px 0 0;
   }
+
+  /* ---------- cómo funciona, en detalle ---------- */
+  .como-funciona{
+    max-width:1240px;
+    margin:0 auto;
+    padding:clamp(60px,8vw,100px) clamp(20px,5vw,64px);
+    text-align:center;
+  }
+  .como-funciona-intro{
+    max-width:720px;
+    margin:0 auto 40px;
+  }
+  .como-funciona-intro h2{
+    font-size:clamp(24px,3vw,32px);
+    font-weight:800;
+    margin:0 0 14px;
+  }
+  .como-funciona-intro p{
+    color:var(--ink);
+    font-size:16px;
+    line-height:1.7;
+    margin:0;
+    text-align:left;
+  }
+  .cf-gallery{
+    display:flex;
+    flex-wrap:wrap;
+    gap:32px;
+    justify-content:center;
+    margin-bottom:40px;
+  }
+  .cf-card{
+    background:var(--white);
+    border-radius:20px;
+    box-shadow:0 16px 40px rgba(10,74,71,0.10);
+    overflow:hidden;
+    width:min(440px, 100%);
+    text-align:left;
+  }
+  .cf-card svg{ display:block; width:100%; height:auto; }
+
+  /* reproductor animado (comparte estilos con marketing/assets/infografias-certero.html) */
+  .player-wrap{
+    max-width:860px;
+    margin:0 auto;
+    background:var(--white);
+    border-radius:20px;
+    box-shadow:0 16px 40px rgba(10,74,71,0.10);
+    padding:32px 32px 28px;
+    text-align:left;
+  }
+  .player-wrap .eyebrow{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--teal);
+  }
+  .player-wrap h3{
+    font-size:22px;
+    font-weight:800;
+    margin:8px 0 4px;
+  }
+  .player-sub{
+    color:var(--stone);
+    font-size:14px;
+    margin:0 0 22px;
+  }
+  .player-stage{
+    background:var(--mist);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .player-stage svg{ display:block; width:100%; height:auto; }
+  .frame{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .45s ease;
+  }
+  .frame.active{ opacity:1; pointer-events:auto; }
+  .frame .pop{
+    opacity:0;
+    transform-origin:center;
+    animation:cfPopIn .5s ease forwards;
+  }
+  .frame:not(.active) .pop{ animation:none; opacity:0; }
+  @keyframes cfPopIn{
+    from{ opacity:0; transform:scale(0.75) translateY(6px); }
+    to{ opacity:1; transform:scale(1) translateY(0); }
+  }
+  .player-caption{
+    min-height:22px;
+    text-align:center;
+    font-size:14px;
+    color:var(--stone);
+    margin:14px 0 4px;
+  }
+  .player-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin-top:10px;
+  }
+  .player-btn{
+    width:38px;
+    height:38px;
+    border-radius:99px;
+    border:1px solid var(--mist);
+    background:var(--white);
+    color:var(--teal-deep);
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .player-btn:hover{ background:var(--mist); }
+  .player-btn--play{ font-size:12px; }
+  .player-dots{ display:flex; gap:8px; }
+  .player-dot{
+    width:9px;
+    height:9px;
+    border-radius:99px;
+    border:none;
+    background:var(--mist);
+    cursor:pointer;
+    padding:0;
+  }
+  .player-dot.active{
+    background:var(--teal);
+    width:22px;
+    transition:width .2s ease;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .frame{ transition:none; }
+    .frame .pop{ animation:none; opacity:1; transform:none; }
+  }
 </style>
 </head>
 <body>
@@ -1043,6 +1181,7 @@
     <a href="#entries">Para personas</a>
     <a href="#entries">Para pymes</a>
     <a href="#precios">Precios</a>
+    <a href="#como-funciona">Cómo funciona</a>
     <a href="#preguntas">Preguntas frecuentes</a>
     <a href="./portal/">Portal de clientes</a>
   </nav>
@@ -1188,6 +1327,389 @@
   </div>
 </section>
 
+<section class="como-funciona" id="como-funciona">
+  <div class="como-funciona-intro">
+    <h2>Cómo funciona Certero, en detalle</h2>
+    <p>Certero decide cada match con reglas fijas, no con un algoritmo de caja negra. Primero busca el mismo cargo declarado por ambas partes; si no hay candidato, prueba con una familia de cargos afines y avisa explícitamente a la empresa de que el candidato viene de otro rubro; si tampoco hay, permite una propuesta libre solo cuando ambos coinciden en el mismo cargo escrito a mano. En los tres niveles se aplican los mismos cuatro filtros — cargo, comuna, disponibilidad y renta —, y la renta solo bloquea un match si ambas partes dieron una cifra concreta. Recién después de que candidato y empresa confirman por separado se comparte el contacto; hasta ese momento, los perfiles son anónimos entre sí. Tras el encuentro, ambas partes se califican en confianza, y si la relación no prospera dentro de 90 días, Certero repone el match sin cobrar de nuevo.</p>
+  </div>
+
+  <div class="cf-gallery">
+    <div class="cf-card">
+      <svg viewBox="0 0 1080 1580" role="img" aria-label="Infografía: Así funciona Certero, en 5 pasos — conversas por WhatsApp, Certero cruza cargo, comuna, renta y disponibilidad, ambos confirman, se comparte el contacto, y el encuentro deja una reputación que ayuda al siguiente match.">
+        <defs>
+          <linearGradient id="bgSimple" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0E6F6B"/>
+            <stop offset="100%" stop-color="#0A4A47"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1080" height="1580" fill="url(#bgSimple)"/>
+        <g transform="translate(60,64)">
+          <rect x="0" y="0" width="72" height="72" rx="20" fill="#FFFFFF" opacity="0.12"/>
+          <path d="M16 49 C 22 49, 29 43, 36 29" fill="none" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round"/>
+          <path d="M56 49 C 50 49, 43 43, 36 29" fill="none" stroke="#FFFFFF" stroke-width="6.5" stroke-linecap="round"/>
+          <text x="90" y="46" font-family="Manrope, sans-serif" font-weight="800" font-size="32" fill="#FFFFFF">certero</text>
+        </g>
+        <text x="60" y="220" font-family="Manrope, sans-serif" font-weight="800" font-size="54" fill="#FFFFFF">Así funciona</text>
+        <text x="60" y="278" font-family="Manrope, sans-serif" font-weight="800" font-size="54" fill="#F2B705">Certero</text>
+        <text x="60" y="322" font-family="Karla, sans-serif" font-weight="400" font-size="20" fill="#E4F1EF">Se encuentran. Se confirman. Se contactan.</text>
+        <line x1="94" y1="410" x2="94" y2="1360" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="3"/>
+        <g transform="translate(0,400)">
+          <circle cx="94" cy="40" r="40" fill="#F2B705"/>
+          <text x="94" y="52" font-family="Manrope, sans-serif" font-weight="800" font-size="30" fill="#0A4A47" text-anchor="middle">1</text>
+          <text x="160" y="32" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#FFFFFF">Conversas por WhatsApp</text>
+          <text x="160" y="66" font-family="Karla, sans-serif" font-weight="400" font-size="18" fill="#E4F1EF">
+            <tspan x="160" dy="0">Cuéntale a Certero qué buscas —o qué necesitas</tspan>
+            <tspan x="160" dy="26">contratar—. Sin CV, sin formularios largos.</tspan>
+          </text>
+        </g>
+        <g transform="translate(0,590)">
+          <circle cx="94" cy="40" r="40" fill="#F2B705"/>
+          <text x="94" y="52" font-family="Manrope, sans-serif" font-weight="800" font-size="30" fill="#0A4A47" text-anchor="middle">2</text>
+          <text x="160" y="32" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#FFFFFF">Certero cruza</text>
+          <text x="160" y="66" font-family="Karla, sans-serif" font-weight="400" font-size="18" fill="#E4F1EF">
+            <tspan x="160" dy="0">Cargo, comuna, renta y disponibilidad, con</tspan>
+            <tspan x="160" dy="26">reglas transparentes — no un ranking de caja negra.</tspan>
+          </text>
+        </g>
+        <g transform="translate(0,780)">
+          <circle cx="94" cy="40" r="40" fill="#F2B705"/>
+          <text x="94" y="52" font-family="Manrope, sans-serif" font-weight="800" font-size="30" fill="#0A4A47" text-anchor="middle">3</text>
+          <text x="160" y="32" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#FFFFFF">Ambos confirman</text>
+          <text x="160" y="66" font-family="Karla, sans-serif" font-weight="400" font-size="18" fill="#E4F1EF">
+            <tspan x="160" dy="0">El match se explica, no se impone:</tspan>
+            <tspan x="160" dy="26">tú decides si avanzas.</tspan>
+          </text>
+        </g>
+        <g transform="translate(0,970)">
+          <circle cx="94" cy="40" r="40" fill="#F2B705"/>
+          <text x="94" y="52" font-family="Manrope, sans-serif" font-weight="800" font-size="30" fill="#0A4A47" text-anchor="middle">4</text>
+          <text x="160" y="32" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#FFFFFF">Se comparte el contacto</text>
+          <text x="160" y="66" font-family="Karla, sans-serif" font-weight="400" font-size="18" fill="#E4F1EF">
+            <tspan x="160" dy="0">Coordinan directo. Un encuentro,</tspan>
+            <tspan x="160" dy="26">no un proceso de 40 días.</tspan>
+          </text>
+        </g>
+        <g transform="translate(0,1160)">
+          <circle cx="94" cy="40" r="40" fill="#FF6B4A"/>
+          <text x="94" y="52" font-family="Manrope, sans-serif" font-weight="800" font-size="30" fill="#FFFFFF" text-anchor="middle">5</text>
+          <text x="160" y="32" font-family="Manrope, sans-serif" font-weight="700" font-size="27" fill="#FFFFFF">El encuentro deja reputación</text>
+          <text x="160" y="66" font-family="Karla, sans-serif" font-weight="400" font-size="18" fill="#E4F1EF">
+            <tspan x="160" dy="0">Cada encuentro deja una reputación real, visible</tspan>
+            <tspan x="160" dy="26">para el siguiente match — y si no prospera en 90</tspan>
+            <tspan x="160" dy="26">días, Certero repone el match sin cobrar de nuevo.</tspan>
+          </text>
+        </g>
+        <line x1="60" y1="1420" x2="1020" y2="1420" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1.5"/>
+        <text x="60" y="1468" font-family="Karla, sans-serif" font-weight="700" font-size="19" fill="#FFFFFF">Gratis para quien busca trabajo, siempre.</text>
+        <text x="60" y="1498" font-family="Karla, sans-serif" font-weight="400" font-size="17" fill="#E4F1EF">La empresa paga solo por match confirmado — garantía de reposición de 90 días.</text>
+      </svg>
+    </div>
+
+    <div class="cf-card">
+      <svg viewBox="0 0 1080 1780" role="img" aria-label="Infografía técnica: cómo decide Certero un match — cascada de 3 niveles (exacto, familia afín, propuesta libre), 4 filtros aplicados en cada nivel (cargo, comuna, disponibilidad, renta), el flujo de confirmación hasta compartir el contacto, y qué pasa después: reputación doble ciego y garantía de reposición de 90 días.">
+        <rect x="0" y="0" width="1080" height="1780" fill="#FAF7F2"/>
+        <g transform="translate(60,56)">
+          <rect x="0" y="0" width="64" height="64" rx="18" fill="#0E6F6B"/>
+          <path d="M14 44 C 20 44, 26 39, 32 26" fill="none" stroke="#FFFFFF" stroke-width="5.8" stroke-linecap="round"/>
+          <path d="M50 44 C 44 44, 38 39, 32 26" fill="none" stroke="#FFFFFF" stroke-width="5.8" stroke-linecap="round"/>
+          <text x="80" y="41" font-family="Manrope, sans-serif" font-weight="800" font-size="28" fill="#0A4A47">certero</text>
+        </g>
+        <text x="60" y="198" font-family="Manrope, sans-serif" font-weight="800" font-size="42" fill="#1B231F">Cómo decide Certero</text>
+        <text x="60" y="244" font-family="Manrope, sans-serif" font-weight="800" font-size="42" fill="#1B231F">un match</text>
+        <text x="60" y="280" font-family="Karla, sans-serif" font-weight="400" font-size="17" fill="#5B6663">El mismo mecanismo que corre en producción — no una versión resumida para marketing.</text>
+        <text x="60" y="336" font-family="Manrope, sans-serif" font-weight="700" font-size="15" letter-spacing="0.04em" fill="#0E6F6B">3 NIVELES EN CASCADA — CADA UNO SOLO SE INTENTA SI EL ANTERIOR NO ENCONTRÓ CANDIDATO</text>
+        <defs>
+          <marker id="cfArrowDown" viewBox="0 0 10 10" refX="5" refY="9" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+            <path d="M0 0 L10 0 L5 10 Z" fill="#5B6663"/>
+          </marker>
+        </defs>
+        <g transform="translate(60,362)">
+          <rect x="0" y="0" width="960" height="118" rx="16" fill="#FFFFFF" stroke="#0E6F6B" stroke-width="2"/>
+          <rect x="0" y="0" width="10" height="118" rx="5" fill="#0E6F6B"/>
+          <text x="34" y="38" font-family="Manrope, sans-serif" font-weight="800" font-size="15" fill="#0E6F6B">NIVEL 1 — EXACTO</text>
+          <text x="34" y="70" font-family="Karla, sans-serif" font-weight="500" font-size="19" fill="#1B231F">Mismo cargo declarado por ambos lados.</text>
+          <text x="34" y="98" font-family="Karla, sans-serif" font-weight="400" font-size="15" fill="#5B6663">Se intenta siempre primero, para todas las vacantes de la ronda.</text>
+        </g>
+        <line x1="540" y1="480" x2="540" y2="524" stroke="#5B6663" stroke-width="2" marker-end="url(#cfArrowDown)"/>
+        <text x="560" y="508" font-family="Karla, sans-serif" font-style="italic" font-size="14" fill="#5B6663">sin candidato compatible</text>
+        <g transform="translate(60,530)">
+          <rect x="0" y="0" width="960" height="118" rx="16" fill="#FFFFFF" stroke="#0E6F6B" stroke-width="2"/>
+          <rect x="0" y="0" width="10" height="118" rx="5" fill="#0E6F6B"/>
+          <text x="34" y="38" font-family="Manrope, sans-serif" font-weight="800" font-size="15" fill="#0E6F6B">NIVEL 2 — FAMILIA AFÍN</text>
+          <text x="34" y="70" font-family="Karla, sans-serif" font-weight="500" font-size="19" fill="#1B231F">Cargo distinto, misma familia de habilidades transferibles.</text>
+          <text x="34" y="98" font-family="Karla, sans-serif" font-weight="400" font-size="15" fill="#5B6663">La empresa recibe aviso explícito de que el candidato viene de otro rubro.</text>
+        </g>
+        <line x1="540" y1="648" x2="540" y2="692" stroke="#5B6663" stroke-width="2" marker-end="url(#cfArrowDown)"/>
+        <text x="560" y="676" font-family="Karla, sans-serif" font-style="italic" font-size="14" fill="#5B6663">sin candidato compatible</text>
+        <g transform="translate(60,698)">
+          <rect x="0" y="0" width="960" height="118" rx="16" fill="#FFFFFF" stroke="#0E6F6B" stroke-width="2"/>
+          <rect x="0" y="0" width="10" height="118" rx="5" fill="#0E6F6B"/>
+          <text x="34" y="38" font-family="Manrope, sans-serif" font-weight="800" font-size="15" fill="#0E6F6B">NIVEL 3 — PROPUESTA LIBRE</text>
+          <text x="34" y="70" font-family="Karla, sans-serif" font-weight="500" font-size="19" fill="#1B231F">Solo si ambos quedaron sin cargo estándar y confirmaron el mismo cargo, en texto libre.</text>
+          <text x="34" y="98" font-family="Karla, sans-serif" font-weight="400" font-size="15" fill="#5B6663">Comparación determinística — nunca un juicio del modelo en el momento del match.</text>
+        </g>
+        <line x1="1020" y1="421" x2="1080" y2="421" stroke="#FF6B4A" stroke-width="2"/>
+        <line x1="1020" y1="589" x2="1080" y2="589" stroke="#FF6B4A" stroke-width="2"/>
+        <line x1="1020" y1="757" x2="1080" y2="757" stroke="#FF6B4A" stroke-width="2"/>
+        <text x="60" y="864" font-family="Manrope, sans-serif" font-weight="700" font-size="15" letter-spacing="0.04em" fill="#B4401F">LOS MISMOS 4 FILTROS APLICAN EN LOS 3 NIVELES — SOLO CAMBIA EL CRITERIO DE CARGO</text>
+        <g transform="translate(60,890)">
+          <rect x="0" y="0" width="228" height="150" rx="14" fill="#FFE1D6"/>
+          <text x="20" y="36" font-family="Manrope, sans-serif" font-weight="800" font-size="16" fill="#B4401F">Cargo</text>
+          <text x="20" y="64" font-family="Karla, sans-serif" font-size="14" fill="#1B231F">
+            <tspan x="20" dy="0">Según el nivel de</tspan>
+            <tspan x="20" dy="20">la cascada de</tspan>
+            <tspan x="20" dy="20">arriba.</tspan>
+          </text>
+        </g>
+        <g transform="translate(304,890)">
+          <rect x="0" y="0" width="228" height="150" rx="14" fill="#FFE1D6"/>
+          <text x="20" y="36" font-family="Manrope, sans-serif" font-weight="800" font-size="16" fill="#B4401F">Comuna</text>
+          <text x="20" y="64" font-family="Karla, sans-serif" font-size="14" fill="#1B231F">
+            <tspan x="20" dy="0">Igual, alternativa,</tspan>
+            <tspan x="20" dy="20">o comodín región/</tspan>
+            <tspan x="20" dy="20">nacional.</tspan>
+          </text>
+        </g>
+        <g transform="translate(548,890)">
+          <rect x="0" y="0" width="228" height="150" rx="14" fill="#FFE1D6"/>
+          <text x="20" y="36" font-family="Manrope, sans-serif" font-weight="800" font-size="16" fill="#B4401F">Disponibilidad</text>
+          <text x="20" y="64" font-family="Karla, sans-serif" font-size="14" fill="#1B231F">
+            <tspan x="20" dy="0">Comparten bloque,</tspan>
+            <tspan x="20" dy="20">o alguno declaró</tspan>
+            <tspan x="20" dy="20">horario flexible.</tspan>
+          </text>
+        </g>
+        <g transform="translate(792,890)">
+          <rect x="0" y="0" width="228" height="150" rx="14" fill="#FFE1D6"/>
+          <text x="20" y="36" font-family="Manrope, sans-serif" font-weight="800" font-size="16" fill="#B4401F">Renta</text>
+          <text x="20" y="64" font-family="Karla, sans-serif" font-size="14" fill="#1B231F">
+            <tspan x="20" dy="0">Solo bloquea si</tspan>
+            <tspan x="20" dy="20">AMBOS dieron una</tspan>
+            <tspan x="20" dy="20">cifra concreta.</tspan>
+          </text>
+        </g>
+        <line x1="540" y1="1040" x2="540" y2="1084" stroke="#5B6663" stroke-width="2" marker-end="url(#cfArrowDown)"/>
+        <text x="560" y="1068" font-family="Karla, sans-serif" font-style="italic" font-size="14" fill="#5B6663">match encontrado</text>
+        <g transform="translate(60,1090)">
+          <rect x="0" y="0" width="960" height="80" rx="16" fill="#E4F1EF"/>
+          <text x="480" y="48" font-family="Manrope, sans-serif" font-weight="700" font-size="20" fill="#0A4A47" text-anchor="middle">Match propuesto — perfiles siguen anónimos entre sí</text>
+        </g>
+        <line x1="540" y1="1170" x2="540" y2="1214" stroke="#5B6663" stroke-width="2" marker-end="url(#cfArrowDown)"/>
+        <g transform="translate(60,1220)">
+          <rect x="0" y="0" width="462" height="90" rx="16" fill="#FFFFFF" stroke="#5B6663" stroke-width="1.5"/>
+          <text x="231" y="38" font-family="Manrope, sans-serif" font-weight="700" font-size="17" fill="#1B231F" text-anchor="middle">Candidato confirma</text>
+          <text x="231" y="64" font-family="Karla, sans-serif" font-size="13" fill="#5B6663" text-anchor="middle">Puede declinar sin dar motivo</text>
+        </g>
+        <g transform="translate(558,1220)">
+          <rect x="0" y="0" width="462" height="90" rx="16" fill="#FFFFFF" stroke="#5B6663" stroke-width="1.5"/>
+          <text x="231" y="38" font-family="Manrope, sans-serif" font-weight="700" font-size="17" fill="#1B231F" text-anchor="middle">Empresa confirma</text>
+          <text x="231" y="64" font-family="Karla, sans-serif" font-size="13" fill="#5B6663" text-anchor="middle">Puede declinar sin dar motivo</text>
+        </g>
+        <line x1="291" y1="1310" x2="500" y2="1364" stroke="#5B6663" stroke-width="2"/>
+        <line x1="789" y1="1310" x2="580" y2="1364" stroke="#5B6663" stroke-width="2" marker-end="url(#cfArrowDown)"/>
+        <text x="540" y="1340" font-family="Karla, sans-serif" font-style="italic" font-size="14" fill="#5B6663" text-anchor="middle">ambos confirman</text>
+        <g transform="translate(60,1370)">
+          <rect x="0" y="0" width="960" height="96" rx="16" fill="#0E6F6B"/>
+          <text x="480" y="46" font-family="Manrope, sans-serif" font-weight="800" font-size="21" fill="#FFFFFF" text-anchor="middle">Contacto compartido</text>
+          <text x="480" y="74" font-family="Karla, sans-serif" font-size="14" fill="#E4F1EF" text-anchor="middle">Recién acá se revela la identidad — nunca antes</text>
+        </g>
+        <line x1="540" y1="1466" x2="540" y2="1510" stroke="#5B6663" stroke-width="2" marker-end="url(#cfArrowDown)"/>
+        <text x="560" y="1494" font-family="Karla, sans-serif" font-style="italic" font-size="14" fill="#5B6663">después del encuentro</text>
+        <text x="60" y="1548" font-family="Manrope, sans-serif" font-weight="700" font-size="15" letter-spacing="0.04em" fill="#0E6F6B">DESPUÉS DEL MATCH</text>
+        <g transform="translate(60,1568)">
+          <rect x="0" y="0" width="462" height="140" rx="16" fill="#E4F1EF"/>
+          <text x="24" y="38" font-family="Manrope, sans-serif" font-weight="800" font-size="17" fill="#0A4A47">Reputación doble ciego</text>
+          <text x="24" y="66" font-family="Karla, sans-serif" font-size="14" fill="#1B231F">
+            <tspan x="24" dy="0">Candidato y empresa se califican en</tspan>
+            <tspan x="24" dy="22">confianza. La confiabilidad resultante</tspan>
+            <tspan x="24" dy="22">desempata futuras rondas — nunca excluye.</tspan>
+          </text>
+        </g>
+        <g transform="translate(558,1568)">
+          <rect x="0" y="0" width="462" height="140" rx="16" fill="#E4F1EF"/>
+          <text x="24" y="38" font-family="Manrope, sans-serif" font-weight="800" font-size="17" fill="#0A4A47">Garantía de reposición</text>
+          <text x="24" y="66" font-family="Karla, sans-serif" font-size="14" fill="#1B231F">
+            <tspan x="24" dy="0">Si la relación no prospera dentro de</tspan>
+            <tspan x="24" dy="22">90 días, Certero repone el match sin</tspan>
+            <tspan x="24" dy="22">cobrar de nuevo.</tspan>
+          </text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="player-wrap">
+    <div class="eyebrow">Versión animada</div>
+    <h3>El modelo, paso a paso</h3>
+    <p class="player-sub">Avanza solo — o usa las flechas y los puntos para moverte a tu ritmo.</p>
+    <div class="player-stage" id="cfPlayerStage">
+      <svg id="cfStageSvg" viewBox="0 0 800 420" role="img" aria-live="polite" aria-label="Animación paso a paso de cómo funciona un match en Certero">
+        <defs>
+          <symbol id="cfIcoChat" viewBox="0 0 40 40">
+            <path d="M4 6 h32 a3 3 0 0 1 3 3 v16 a3 3 0 0 1 -3 3 H14 l-8 7 v-7 H4 a3 3 0 0 1 -3 -3 V9 a3 3 0 0 1 3 -3 Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+            <line x1="10" y1="16" x2="30" y2="16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+            <line x1="10" y1="22" x2="22" y2="22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </symbol>
+          <symbol id="cfIcoPerson" viewBox="0 0 40 40">
+            <circle cx="20" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <path d="M4 36 c0 -10 8 -16 16 -16 s16 6 16 16" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+          </symbol>
+          <symbol id="cfIcoBuilding" viewBox="0 0 40 40">
+            <rect x="8" y="6" width="24" height="30" rx="2" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <line x1="14" y1="13" x2="18" y2="13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <line x1="22" y1="13" x2="26" y2="13" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <line x1="14" y1="20" x2="18" y2="20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <line x1="22" y1="20" x2="26" y2="20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <rect x="16" y="27" width="8" height="9" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          </symbol>
+          <symbol id="cfIcoBriefcase" viewBox="0 0 40 40">
+            <rect x="4" y="14" width="32" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <path d="M14 14 v-4 a3 3 0 0 1 3 -3 h6 a3 3 0 0 1 3 3 v4" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <line x1="4" y1="23" x2="36" y2="23" stroke="currentColor" stroke-width="2.8"/>
+          </symbol>
+          <symbol id="cfIcoPin" viewBox="0 0 40 40">
+            <path d="M20 4 c8 0 13 6 13 13 c0 9 -13 19 -13 19 s-13 -10 -13 -19 c0 -7 5 -13 13 -13 Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+            <circle cx="20" cy="17" r="4.5" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          </symbol>
+          <symbol id="cfIcoClock" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <line x1="20" y1="20" x2="20" y2="10" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="20" y1="20" x2="27" y2="24" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+          </symbol>
+          <symbol id="cfIcoCoin" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <text x="20" y="27" font-family="Manrope, sans-serif" font-weight="800" font-size="18" fill="currentColor" text-anchor="middle">$</text>
+          </symbol>
+          <symbol id="cfIcoCheck" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <path d="M12 21 l6 6 l11 -13" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+          <symbol id="cfIcoLock" viewBox="0 0 40 40">
+            <rect x="9" y="18" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <path d="M13 18 v-5 a7 7 0 0 1 14 0 v5" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <circle cx="20" cy="26" r="2.4" fill="currentColor" stroke="none"/>
+          </symbol>
+          <symbol id="cfIcoPhone" viewBox="0 0 40 40">
+            <rect x="11" y="3" width="18" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="2.8"/>
+            <line x1="17" y1="32" x2="23" y2="32" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+          </symbol>
+          <symbol id="cfIcoStar" viewBox="0 0 40 40">
+            <polygon points="20,3 25,15 38,16 28,24 31,37 20,30 9,37 12,24 2,16 15,15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+          </symbol>
+          <symbol id="cfIcoShield" viewBox="0 0 40 40">
+            <path d="M20 3 L34 9 V19 C34 28 28 34 20 37 C12 34 6 28 6 19 V9 Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/>
+            <path d="M13 20 l5 5 l9 -11" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+          <marker id="cfMArrowH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 Z" fill="#5B6663"/>
+          </marker>
+        </defs>
+        <g class="frame" data-frame="0">
+          <use href="#cfIcoChat" x="340" y="60" width="120" height="120" color="#0E6F6B"/>
+          <g class="pop" style="animation-delay:.5s">
+            <use href="#cfIcoPerson" x="120" y="230" width="90" height="90" color="#0A4A47"/>
+            <text x="165" y="345" font-family="Karla, sans-serif" font-size="16" fill="#5B6663" text-anchor="middle">Candidato</text>
+          </g>
+          <g class="pop" style="animation-delay:.8s">
+            <use href="#cfIcoBuilding" x="590" y="230" width="90" height="90" color="#0A4A47"/>
+            <text x="635" y="345" font-family="Karla, sans-serif" font-size="16" fill="#5B6663" text-anchor="middle">Empresa</text>
+          </g>
+          <text x="400" y="205" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">se conectan por WhatsApp</text>
+        </g>
+        <g class="frame" data-frame="1">
+          <g class="pop" style="animation-delay:.1s">
+            <use href="#cfIcoBriefcase" x="60" y="130" width="80" height="80" color="#B4401F"/>
+            <text x="100" y="234" font-family="Karla, sans-serif" font-size="14" fill="#1B231F" text-anchor="middle">Cargo</text>
+          </g>
+          <g class="pop" style="animation-delay:.5s">
+            <use href="#cfIcoPin" x="260" y="130" width="80" height="80" color="#B4401F"/>
+            <text x="300" y="234" font-family="Karla, sans-serif" font-size="14" fill="#1B231F" text-anchor="middle">Comuna</text>
+          </g>
+          <g class="pop" style="animation-delay:.9s">
+            <use href="#cfIcoClock" x="460" y="130" width="80" height="80" color="#B4401F"/>
+            <text x="500" y="234" font-family="Karla, sans-serif" font-size="14" fill="#1B231F" text-anchor="middle">Disponibilidad</text>
+          </g>
+          <g class="pop" style="animation-delay:1.3s">
+            <use href="#cfIcoCoin" x="660" y="130" width="80" height="80" color="#B4401F"/>
+            <text x="700" y="234" font-family="Karla, sans-serif" font-size="14" fill="#1B231F" text-anchor="middle">Renta</text>
+          </g>
+          <text x="400" y="80" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">Certero filtra por los 4, siempre</text>
+        </g>
+        <g class="frame" data-frame="2">
+          <text x="400" y="160" font-family="Manrope, sans-serif" font-weight="800" font-size="110" fill="#0E6F6B" text-anchor="middle">=</text>
+          <text x="400" y="230" font-family="Manrope, sans-serif" font-weight="700" font-size="24" fill="#1B231F" text-anchor="middle">Nivel 1 — Exacto</text>
+          <text x="400" y="262" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">mismo cargo, ambos lados. Se intenta siempre primero.</text>
+        </g>
+        <g class="frame" data-frame="3">
+          <text x="400" y="115" font-family="Karla, sans-serif" font-size="14" fill="#5B6663" text-anchor="middle">nivel 1 no encontró candidato →</text>
+          <text x="400" y="230" font-family="Manrope, sans-serif" font-weight="800" font-size="100" fill="#0E6F6B" text-anchor="middle">≈</text>
+          <text x="400" y="300" font-family="Manrope, sans-serif" font-weight="700" font-size="24" fill="#1B231F" text-anchor="middle">Nivel 2 — Familia afín</text>
+          <text x="400" y="332" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">cargo distinto, misma familia de habilidades.</text>
+        </g>
+        <g class="frame" data-frame="4">
+          <text x="400" y="115" font-family="Karla, sans-serif" font-size="14" fill="#5B6663" text-anchor="middle">nivel 2 tampoco encontró →</text>
+          <text x="400" y="240" font-family="Manrope, sans-serif" font-weight="800" font-size="110" fill="#0E6F6B" text-anchor="middle">?</text>
+          <text x="400" y="300" font-family="Manrope, sans-serif" font-weight="700" font-size="24" fill="#1B231F" text-anchor="middle">Nivel 3 — Propuesta libre</text>
+          <text x="400" y="332" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">último recurso: ambos proponen lo mismo, a mano.</text>
+        </g>
+        <g class="frame" data-frame="5">
+          <use href="#cfIcoPerson" x="140" y="150" width="90" height="90" color="#0A4A47"/>
+          <use href="#cfIcoBuilding" x="570" y="150" width="90" height="90" color="#0A4A47"/>
+          <g class="pop" style="animation-delay:.4s">
+            <use href="#cfIcoCheck" x="350" y="140" width="100" height="100" color="#FF6B4A"/>
+          </g>
+          <text x="400" y="290" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#1B231F" text-anchor="middle">Match propuesto</text>
+          <text x="400" y="322" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">los perfiles siguen anónimos entre sí</text>
+        </g>
+        <g class="frame" data-frame="6">
+          <g class="pop" style="animation-delay:.1s">
+            <use href="#cfIcoCheck" x="140" y="140" width="100" height="100" color="#0E6F6B"/>
+            <text x="190" y="270" font-family="Karla, sans-serif" font-size="15" fill="#1B231F" text-anchor="middle">Candidato confirma</text>
+          </g>
+          <g class="pop" style="animation-delay:.7s">
+            <use href="#cfIcoCheck" x="560" y="140" width="100" height="100" color="#0E6F6B"/>
+            <text x="610" y="270" font-family="Karla, sans-serif" font-size="15" fill="#1B231F" text-anchor="middle">Empresa confirma</text>
+          </g>
+          <text x="400" y="80" font-family="Manrope, sans-serif" font-weight="700" font-size="20" fill="#1B231F" text-anchor="middle">Ambos deben confirmar</text>
+        </g>
+        <g class="frame" data-frame="7">
+          <use href="#cfIcoCoin" x="150" y="140" width="100" height="100" color="#F2B705"/>
+          <text x="200" y="272" font-family="Karla, sans-serif" font-size="15" fill="#1B231F" text-anchor="middle">¿Saldo &gt; 0?</text>
+          <line x1="280" y1="190" x2="340" y2="190" stroke="#5B6663" stroke-width="2.4" marker-end="url(#cfMArrowH)"/>
+          <g class="pop" style="animation-delay:.6s">
+            <use href="#cfIcoLock" x="360" y="140" width="100" height="100" color="#0E6F6B"/>
+            <text x="410" y="272" font-family="Karla, sans-serif" font-size="15" fill="#1B231F" text-anchor="middle">Se abre el encuentro</text>
+          </g>
+          <text x="400" y="80" font-family="Manrope, sans-serif" font-weight="700" font-size="20" fill="#1B231F" text-anchor="middle">Se destraba el crédito</text>
+        </g>
+        <g class="frame" data-frame="8">
+          <use href="#cfIcoPhone" x="340" y="90" width="120" height="120" color="#0A4A47"/>
+          <text x="400" y="260" font-family="Manrope, sans-serif" font-weight="700" font-size="22" fill="#1B231F" text-anchor="middle">Encuentro por WhatsApp</text>
+          <text x="400" y="292" font-family="Karla, sans-serif" font-size="15" fill="#5B6663" text-anchor="middle">recién acá se revela el contacto — nunca antes</text>
+        </g>
+        <g class="frame" data-frame="9">
+          <g class="pop" style="animation-delay:.1s">
+            <use href="#cfIcoStar" x="180" y="130" width="90" height="90" color="#F2B705"/>
+            <text x="225" y="255" font-family="Karla, sans-serif" font-size="15" fill="#1B231F" text-anchor="middle">Reputación doble ciego</text>
+          </g>
+          <g class="pop" style="animation-delay:.6s">
+            <use href="#cfIcoShield" x="530" y="130" width="90" height="90" color="#0E6F6B"/>
+            <text x="575" y="255" font-family="Karla, sans-serif" font-size="15" fill="#1B231F" text-anchor="middle">Garantía 90 días</text>
+          </g>
+          <text x="400" y="80" font-family="Manrope, sans-serif" font-weight="700" font-size="20" fill="#1B231F" text-anchor="middle">Después del encuentro</text>
+        </g>
+      </svg>
+    </div>
+    <div class="player-caption" id="cfPlayerCaption"></div>
+    <div class="player-controls">
+      <button type="button" class="player-btn" id="cfBtnPrev" aria-label="Paso anterior">‹</button>
+      <button type="button" class="player-btn player-btn--play" id="cfBtnPlay" aria-label="Pausar">❚❚</button>
+      <div class="player-dots" id="cfPlayerDots"></div>
+      <button type="button" class="player-btn" id="cfBtnNext" aria-label="Paso siguiente">›</button>
+    </div>
+  </div>
+</section>
+
 <section class="faq" id="preguntas">
   <h2>Preguntas frecuentes</h2>
   <details>
@@ -1219,6 +1741,7 @@
 <footer class="site-footer">
   <div class="footer-brand">certero</div>
   <nav class="footer-links">
+    <a href="#como-funciona">Cómo funciona</a>
     <a href="#preguntas">Preguntas frecuentes</a>
     <a href="./portal/">Portal de clientes</a>
     <a href="./privacidad/index.html">Política de Privacidad</a>
@@ -1250,6 +1773,85 @@
   function openAviso(){
     document.getElementById('modal-aviso').classList.add('open');
   }
+</script>
+
+<script>
+(function(){
+  const STEPS = [
+    { title: "1 · Se conectan", caption: "Candidato y empresa entran a la conversación por WhatsApp." },
+    { title: "2 · Certero filtra", caption: "Cargo, comuna, disponibilidad y renta — siempre los 4." },
+    { title: "3 · Nivel 1: Exacto", caption: "Mismo cargo declarado por ambos lados. Se intenta primero." },
+    { title: "4 · Nivel 2: Familia afín", caption: "Si el nivel 1 no encontró candidato, cargo distinto pero de la misma familia." },
+    { title: "5 · Nivel 3: Propuesta libre", caption: "Último recurso: ambos proponen lo mismo, a mano." },
+    { title: "6 · Match propuesto", caption: "Los perfiles siguen siendo anónimos entre sí." },
+    { title: "7 · Ambos confirman", caption: "Candidato y empresa, cada uno por su lado." },
+    { title: "8 · Se destraba el crédito", caption: "Si hay saldo, se abre. Si no, queda esperando_credito." },
+    { title: "9 · Encuentro", caption: "Llamada nativa de WhatsApp — recién acá se revela el contacto." },
+    { title: "10 · Después", caption: "Reputación doble ciego y garantía de reposición de 90 días." }
+  ];
+
+  const stage = document.getElementById("cfPlayerStage");
+  if (!stage) return;
+  const caption = document.getElementById("cfPlayerCaption");
+  const dotsWrap = document.getElementById("cfPlayerDots");
+  const btnPrev = document.getElementById("cfBtnPrev");
+  const btnNext = document.getElementById("cfBtnNext");
+  const btnPlay = document.getElementById("cfBtnPlay");
+  const frames = [...stage.querySelectorAll(".frame")];
+  if (!frames.length) return;
+
+  const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const STEP_MS = 3400;
+  let current = 0;
+  let playing = !reduced;
+  let timer = null;
+
+  STEPS.forEach((s, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "player-dot";
+    dot.setAttribute("aria-label", s.title);
+    dot.addEventListener("click", () => goTo(i, true));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = [...dotsWrap.querySelectorAll(".player-dot")];
+
+  function render(){
+    frames.forEach(f => f.classList.toggle("active", Number(f.dataset.frame) === current));
+    dots.forEach((d, i) => d.classList.toggle("active", i === current));
+    caption.textContent = STEPS[current].title + " — " + STEPS[current].caption;
+  }
+
+  function goTo(i, userInitiated){
+    current = (i + STEPS.length) % STEPS.length;
+    render();
+    if (userInitiated) restartTimer();
+  }
+
+  function next(){ goTo(current + 1, false); }
+  function prev(){ goTo(current - 1, true); }
+
+  function restartTimer(){
+    if (timer) clearInterval(timer);
+    if (playing) timer = setInterval(next, STEP_MS);
+  }
+
+  function setPlaying(v){
+    playing = v;
+    btnPlay.textContent = playing ? "❚❚" : "▶";
+    btnPlay.setAttribute("aria-label", playing ? "Pausar" : "Reproducir");
+    restartTimer();
+  }
+
+  btnPrev.addEventListener("click", prev);
+  btnNext.addEventListener("click", () => goTo(current + 1, true));
+  btnPlay.addEventListener("click", () => setPlaying(!playing));
+  stage.addEventListener("mouseenter", () => { if (timer) clearInterval(timer); });
+  stage.addEventListener("mouseleave", () => restartTimer());
+
+  render();
+  setPlaying(playing);
+})();
 </script>
 
 </body>
