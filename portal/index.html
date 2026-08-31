@@ -65,6 +65,10 @@
     <h1 style="margin:0">Coincidencias</h1>
     <button id="btn-logout">Salir</button>
   </div>
+  <div id="garantia-toggle-wrap" style="display:none;margin-bottom:16px">
+    <button id="btn-toggle-garantias" style="width:auto;padding:8px 14px;background:var(--mist);color:var(--teal-deep);font-size:13px">🛡️ Reportar garantía</button>
+  </div>
+  <div id="garantia-panel" style="display:none;margin-bottom:20px"></div>
   <div id="feed-lista"></div>
 </div>
 </div>
@@ -236,7 +240,147 @@ function mostrarFeed() {
       if (r.status === 401) { borrarToken(); location.reload(); return null; }
       return r.json();
     })
-    .then(function (body) { if (body) renderFeed(body); });
+    .then(function (body) {
+      if (!body) return;
+      renderFeed(body);
+      // Reporte de garantía (2026-08-31): solo aplica al lado vacante — ver
+      // match-flow.ts:procesarReporteGarantia.
+      document.getElementById("garantia-toggle-wrap").style.display = body.tipo === "vacante" ? "block" : "none";
+    });
+}
+
+/* ---------- Reporte de garantía (solo vacantes) ---------- */
+var MOTIVOS_GARANTIA = ["Renunció", "Lo despedimos", "No se presentó a trabajar", "Otro"];
+
+document.getElementById("btn-toggle-garantias").addEventListener("click", function () {
+  var panel = document.getElementById("garantia-panel");
+  if (panel.style.display === "block") { panel.style.display = "none"; return; }
+  panel.style.display = "block";
+  cargarGarantiasReclamables();
+});
+
+function cargarGarantiasReclamables() {
+  var panel = document.getElementById("garantia-panel");
+  panel.innerHTML = '<p class="hint">Cargando...</p>';
+  fetch(API + "/api/portal/garantias-reclamables", { headers: { Authorization: "Bearer " + leerToken() } })
+    .then(function (r) { return r.json(); })
+    .then(function (items) { renderGarantias(items || []); })
+    .catch(function () { panel.innerHTML = '<p class="hint">No pudimos cargar tus garantías.</p>'; });
+}
+
+function renderGarantias(items) {
+  var panel = document.getElementById("garantia-panel");
+  panel.innerHTML = "";
+  if (items.length === 0) {
+    panel.innerHTML = '<p class="hint">No tienes garantías vigentes para reportar.</p>';
+    return;
+  }
+  items.forEach(function (item) {
+    var card = document.createElement("div");
+    card.className = "item";
+    var r = item.candidatoResumen || {};
+
+    var titulo = document.createElement("div");
+    titulo.innerHTML = "<strong>" + (item.referenceCode || item.matchId) + "</strong> — " + (r.cargo_estandarizado || r.cargo || r.rubro || "candidato");
+    card.appendChild(titulo);
+
+    var vence = document.createElement("p");
+    vence.className = "hint";
+    vence.textContent = "Garantía vigente hasta " + item.garantiaVencimiento;
+    card.appendChild(vence);
+
+    var btn = document.createElement("button");
+    btn.textContent = "No prosperó — reportar";
+    btn.addEventListener("click", function () { mostrarFormularioGarantia(card, item.matchId, btn); });
+    card.appendChild(btn);
+
+    panel.appendChild(card);
+  });
+}
+
+function mostrarFormularioGarantia(card, matchId, botonAbrir) {
+  botonAbrir.style.display = "none";
+  var form = document.createElement("div");
+  form.style.marginTop = "10px";
+
+  var selectMotivo = document.createElement("select");
+  selectMotivo.style.cssText = "width:100%;padding:11px 14px;border:1px solid var(--mist);border-radius:10px;font-size:14px;margin-bottom:12px;";
+  MOTIVOS_GARANTIA.forEach(function (m) {
+    var op = document.createElement("option");
+    op.value = m;
+    op.textContent = m;
+    selectMotivo.appendChild(op);
+  });
+  form.appendChild(selectMotivo);
+
+  var inputFecha = document.createElement("input");
+  inputFecha.type = "date";
+  form.appendChild(inputFecha);
+
+  var textComentario = document.createElement("input");
+  textComentario.placeholder = "Comentario (opcional)";
+  form.appendChild(textComentario);
+
+  var inputArchivo = document.createElement("input");
+  inputArchivo.type = "file";
+  inputArchivo.accept = "image/*,application/pdf";
+  inputArchivo.style.marginBottom = "12px";
+  form.appendChild(inputArchivo);
+
+  var hintArchivo = document.createElement("p");
+  hintArchivo.className = "hint";
+  hintArchivo.textContent = "Si ya reportaste una garantía en los últimos 90 días, este reclamo va a pedirte adjuntar un respaldo (foto o PDF de finiquito/carta de renuncia).";
+  form.appendChild(hintArchivo);
+
+  var btnEnviar = document.createElement("button");
+  btnEnviar.textContent = "Enviar reporte";
+  form.appendChild(btnEnviar);
+
+  var msg = document.createElement("p");
+  msg.style.fontSize = "13px";
+  form.appendChild(msg);
+
+  function enviar(adjuntoBase64, adjuntoNombre) {
+    fetch(API + "/api/portal/garantia-reporte", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + leerToken() },
+      body: JSON.stringify({
+        matchId: matchId,
+        motivo: selectMotivo.value,
+        fechaTermino: inputFecha.value || null,
+        comentario: textComentario.value || null,
+        adjuntoDatosBase64: adjuntoBase64,
+        adjuntoNombre: adjuntoNombre
+      })
+    })
+      .then(function (r) { return r.json().then(function (body) { return { status: r.status, body: body }; }); })
+      .then(function (res) {
+        btnEnviar.disabled = false;
+        if (res.status !== 200) { msg.style.color = "var(--coral)"; msg.textContent = res.body.error || "No pudimos procesar tu reporte."; return; }
+        msg.style.color = "var(--teal)";
+        msg.textContent = res.body.resultado === "reembolsado" ? "Listo, devolvimos el crédito." : "Reporte recibido, queda en revisión manual.";
+        btnEnviar.disabled = true;
+        inputArchivo.disabled = true;
+        selectMotivo.disabled = true;
+      })
+      .catch(function () { btnEnviar.disabled = false; msg.style.color = "var(--coral)"; msg.textContent = "Error de conexión, intenta de nuevo."; });
+  }
+
+  btnEnviar.addEventListener("click", function () {
+    btnEnviar.disabled = true;
+    msg.textContent = "";
+    var archivo = inputArchivo.files[0];
+    if (archivo) {
+      var reader = new FileReader();
+      reader.onload = function () { enviar(reader.result, archivo.name); };
+      reader.onerror = function () { btnEnviar.disabled = false; msg.style.color = "var(--coral)"; msg.textContent = "No pudimos leer el archivo."; };
+      reader.readAsDataURL(archivo);
+    } else {
+      enviar(null, null);
+    }
+  });
+
+  card.appendChild(form);
 }
 
 if (leerToken()) mostrarFeed();
