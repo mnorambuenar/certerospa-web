@@ -39,6 +39,8 @@
   .item dd{margin:0;}
   .item button{width:auto;padding:8px 16px;font-size:13.5px;}
   .empty{color:var(--stone);text-align:center;padding:40px 0;}
+  #selector-vacante-wrap{margin-bottom:16px;}
+  #selector-vacante{padding:9px 12px;border:1px solid var(--mist);border-radius:var(--radius-md);font-size:13.5px;width:100%;font-family:inherit;}
 </style>
 </head>
 <body>
@@ -64,6 +66,9 @@
   <div class="feed-header">
     <h1 style="margin:0">Coincidencias</h1>
     <button id="btn-logout">Salir</button>
+  </div>
+  <div id="selector-vacante-wrap" style="display:none">
+    <select id="selector-vacante"></select>
   </div>
   <div id="garantia-toggle-wrap" style="display:none;margin-bottom:16px">
     <button id="btn-toggle-garantias" style="width:auto;padding:8px 14px;background:var(--mist);color:var(--teal-deep);font-size:13px">🛡️ Reportar garantía</button>
@@ -141,6 +146,7 @@ document.getElementById("btn-logout").addEventListener("click", function () {
     .catch(function () {})
     .then(function () {
       borrarToken();
+      vacanteActiva = null;
       document.getElementById("vista-feed").style.display = "none";
       document.getElementById("vista-login").style.display = "block";
       document.getElementById("paso-codigo").style.display = "block";
@@ -211,7 +217,7 @@ function mostrarInteres(perfilObjetivoId, boton, card) {
   fetch(API + "/api/portal/interest", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: "Bearer " + leerToken() },
-    body: JSON.stringify({ perfilObjetivoId: perfilObjetivoId })
+    body: JSON.stringify({ perfilObjetivoId: perfilObjetivoId, perfilOrigenId: vacanteActiva })
   })
     .then(function (r) { return r.json().then(function (body) { return { status: r.status, body: body }; }); })
     .then(function (res) {
@@ -232,21 +238,54 @@ function mostrarInteres(perfilObjetivoId, boton, card) {
     .catch(function () { boton.disabled = false; });
 }
 
+// Varias vacantes por empresa (2026-09-22): el login sigue siendo por UN código P-XXXXXX, pero si esa empresa
+// tiene más de una vacante confirmada, un selector deja cambiar de cuál ver el feed/garantías sin cerrar sesión
+// y volver a loguearse con otro código — antes esto exigía 3 logins para ver 3 feeds. vacanteActiva = null usa
+// la vacante con la que se entró (comportamiento de siempre); con selector, el id elegido explícitamente.
+var vacanteActiva = null;
+
+function cargarSelectorVacantes(callback) {
+  fetch(API + "/api/portal/mis-vacantes", { headers: { Authorization: "Bearer " + leerToken() } })
+    .then(function (r) { return r.json(); })
+    .then(function (vacantes) {
+      var wrap = document.getElementById("selector-vacante-wrap");
+      if (!vacantes || vacantes.length < 2) { wrap.style.display = "none"; callback(); return; }
+      var select = document.getElementById("selector-vacante");
+      select.innerHTML = "";
+      vacantes.forEach(function (v) {
+        var r = v.resumen || {};
+        var op = document.createElement("option");
+        op.value = v.id;
+        op.textContent = (v.referenceCode || v.id) + " — " + (r.cargo_estandarizado || r.cargo || "vacante") + (r.comuna ? " (" + r.comuna + ")" : "");
+        select.appendChild(op);
+      });
+      if (!vacanteActiva) vacanteActiva = vacantes[0].id;
+      select.value = vacanteActiva;
+      select.onchange = function () { vacanteActiva = select.value; mostrarFeed(); };
+      wrap.style.display = "block";
+      callback();
+    })
+    .catch(function () { document.getElementById("selector-vacante-wrap").style.display = "none"; callback(); });
+}
+
 function mostrarFeed() {
   document.getElementById("vista-login").style.display = "none";
   document.getElementById("vista-feed").style.display = "block";
-  fetch(API + "/api/portal/feed", { headers: { Authorization: "Bearer " + leerToken() } })
-    .then(function (r) {
-      if (r.status === 401) { borrarToken(); location.reload(); return null; }
-      return r.json();
-    })
-    .then(function (body) {
-      if (!body) return;
-      renderFeed(body);
-      // Reporte de garantía (2026-08-31): solo aplica al lado vacante — ver
-      // match-flow.ts:procesarReporteGarantia.
-      document.getElementById("garantia-toggle-wrap").style.display = body.tipo === "vacante" ? "block" : "none";
-    });
+  cargarSelectorVacantes(function () {
+    var url = API + "/api/portal/feed" + (vacanteActiva ? "?perfilId=" + encodeURIComponent(vacanteActiva) : "");
+    fetch(url, { headers: { Authorization: "Bearer " + leerToken() } })
+      .then(function (r) {
+        if (r.status === 401) { borrarToken(); location.reload(); return null; }
+        return r.json();
+      })
+      .then(function (body) {
+        if (!body) return;
+        renderFeed(body);
+        // Reporte de garantía (2026-08-31): solo aplica al lado vacante — ver
+        // match-flow.ts:procesarReporteGarantia.
+        document.getElementById("garantia-toggle-wrap").style.display = body.tipo === "vacante" ? "block" : "none";
+      });
+  });
 }
 
 /* ---------- Reporte de garantía (solo vacantes) ---------- */
@@ -262,7 +301,8 @@ document.getElementById("btn-toggle-garantias").addEventListener("click", functi
 function cargarGarantiasReclamables() {
   var panel = document.getElementById("garantia-panel");
   panel.innerHTML = '<p class="hint">Cargando...</p>';
-  fetch(API + "/api/portal/garantias-reclamables", { headers: { Authorization: "Bearer " + leerToken() } })
+  var url = API + "/api/portal/garantias-reclamables" + (vacanteActiva ? "?perfilId=" + encodeURIComponent(vacanteActiva) : "");
+  fetch(url, { headers: { Authorization: "Bearer " + leerToken() } })
     .then(function (r) { return r.json(); })
     .then(function (items) { renderGarantias(items || []); })
     .catch(function () { panel.innerHTML = '<p class="hint">No pudimos cargar tus garantías.</p>'; });
