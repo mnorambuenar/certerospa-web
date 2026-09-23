@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Certero — Comprar créditos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Karla:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0E6F6B; --teal-deep:#0A4A47; --coral:#FF6B4A;
+    --bone:#FAF7F2; --ink:#1C2A28; --stone:#6B7B78; --mist:#E4F1EF; --radius-md:10px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Karla','Inter',system-ui,sans-serif;background:var(--bone);color:var(--ink);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;}
+  h1,h2{font-family:'Manrope',system-ui,sans-serif;}
+  .card{background:#fff;border-radius:16px;padding:28px;max-width:440px;width:100%;box-shadow:0 8px 24px rgba(10,74,71,0.08);}
+  h1{font-size:20px;margin:0 0 4px;color:var(--teal-deep);}
+  h2{font-size:15px;margin:22px 0 10px;color:var(--teal-deep);}
+  p.hint{color:var(--stone);font-size:13.5px;margin:0 0 16px;}
+  .repetir{background:var(--mist);border-radius:12px;padding:16px;}
+  .repetir p{margin:0 0 12px;font-size:14px;}
+  .plan{display:flex;align-items:center;gap:10px;border:1px solid var(--mist);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:8px;cursor:pointer;font-size:14px;}
+  .plan:has(input:checked){border-color:var(--teal);background:#F4FAF9;}
+  .plan .monto{margin-left:auto;font-weight:700;}
+  input[type=email]{width:100%;padding:11px 14px;border:1px solid var(--mist);border-radius:var(--radius-md);font-size:14px;margin:6px 0 12px;font-family:inherit;}
+  button{width:100%;padding:12px;border:none;border-radius:var(--radius-md);background:var(--teal);color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;}
+  button:hover{background:var(--teal-deep);}
+  button:disabled{opacity:0.6;cursor:default;}
+  .error{color:var(--coral);font-size:13px;margin-top:10px;}
+  .nota{color:var(--stone);font-size:12.5px;margin-top:16px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Comprar créditos</h1>
+  <p class="hint">Cada crédito se usa solo cuando un match queda confirmado por ambas partes, y trae 90 días de garantía de reposición.</p>
+
+  <div id="cargando" class="hint">Cargando…</div>
+  <div id="error-carga" class="error" hidden></div>
+
+  <div id="contenido" hidden>
+    <div id="bloque-repetir" class="repetir" hidden>
+      <p>Tu última compra fue <strong id="repetir-nombre"></strong> por <strong id="repetir-monto"></strong>. La boleta va a <span id="repetir-email"></span>.</p>
+      <button id="btn-repetir" type="button">Repetir y pagar</button>
+    </div>
+
+    <h2 id="titulo-planes">Elige un plan</h2>
+    <form id="form-plan">
+      <div id="lista-planes"></div>
+      <label for="email" class="hint" style="display:block;margin:12px 0 0;">Correo para la boleta</label>
+      <input id="email" type="email" required placeholder="nombre@tuempresa.cl" autocomplete="email" />
+      <button id="btn-pagar" type="submit">Ir a pagar</button>
+    </form>
+    <div id="error-pago" class="error" hidden></div>
+    <p class="nota">El pago se hace en Flow. Los créditos se acreditan solos apenas Flow lo confirma.</p>
+  </div>
+</div>
+
+<script>
+var API = "https://certero-app.fly.dev";
+  var token = new URLSearchParams(location.search).get("t") || "";
+  var fmt = function (n) { return "$" + Number(n).toLocaleString("es-CL"); };
+
+  function mostrarError(id, texto) {
+    var el = document.getElementById(id);
+    el.textContent = texto;
+    el.hidden = false;
+  }
+
+  function pagar(cuerpo, boton) {
+    document.getElementById("error-pago").hidden = true;
+    boton.disabled = true;
+    fetch(API + "/api/compra/" + encodeURIComponent(token), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cuerpo)
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok) { boton.disabled = false; return mostrarError("error-pago", res.d.error || "No pudimos generar el pago."); }
+        location.href = res.d.paymentUrl;
+      })
+      .catch(function () { boton.disabled = false; mostrarError("error-pago", "No hay conexión. Inténtalo de nuevo."); });
+  }
+
+  fetch(API + "/api/compra/" + encodeURIComponent(token))
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+      document.getElementById("cargando").hidden = true;
+      if (!res.ok) return mostrarError("error-carga", res.d.error || "Este link no es válido.");
+
+      var lista = document.getElementById("lista-planes");
+      res.d.planes.forEach(function (p, i) {
+        var label = document.createElement("label");
+        label.className = "plan";
+        var radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "plan";
+        radio.value = p.id;
+        radio.checked = i === 0;
+        var nombre = document.createElement("span");
+        nombre.textContent = p.nombre;
+        var monto = document.createElement("span");
+        monto.className = "monto";
+        monto.textContent = fmt(p.montoClp);
+        label.append(radio, nombre, monto);
+        lista.appendChild(label);
+      });
+
+      if (res.d.ultima) {
+        document.getElementById("repetir-nombre").textContent = res.d.ultima.nombre;
+        document.getElementById("repetir-monto").textContent = fmt(res.d.ultima.montoClp);
+        document.getElementById("repetir-email").textContent = res.d.ultima.email;
+        document.getElementById("bloque-repetir").hidden = false;
+        document.getElementById("titulo-planes").textContent = "O elige otro plan";
+      }
+      document.getElementById("contenido").hidden = false;
+    })
+    .catch(function () {
+      document.getElementById("cargando").hidden = true;
+      mostrarError("error-carga", "No hay conexión. Inténtalo de nuevo.");
+    });
+
+  document.getElementById("btn-repetir").addEventListener("click", function () {
+    pagar({ repetir: true }, this);
+  });
+
+  document.getElementById("form-plan").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var elegido = document.querySelector("input[name=plan]:checked");
+    pagar({ plan: elegido ? elegido.value : "", email: document.getElementById("email").value }, document.getElementById("btn-pagar"));
+  });
+</script>
+</body>
+</html>
