@@ -30,6 +30,12 @@
   button:disabled{opacity:0.6;cursor:default;}
   .error{color:var(--coral);font-size:13px;margin-top:10px;}
   .nota{color:var(--stone);font-size:12.5px;margin-top:16px;}
+  .oc{border-top:1px solid var(--mist);margin-top:22px;padding-top:6px;}
+  .oc input[type=text]{width:100%;padding:11px 14px;border:1px solid var(--mist);border-radius:var(--radius-md);font-size:14px;margin:4px 0 10px;font-family:inherit;}
+  .oc label{display:block;font-size:13px;color:var(--stone);}
+  button.secundario{background:#fff;color:var(--teal);border:1px solid var(--teal);}
+  button.secundario:hover{background:#F4FAF9;}
+  .ok{background:var(--mist);border-radius:12px;padding:16px;font-size:14px;}
 </style>
 </head>
 <body>
@@ -54,8 +60,29 @@
       <button id="btn-pagar" type="submit">Ir a pagar</button>
     </form>
     <div id="error-pago" class="error" hidden></div>
-    <p class="nota">El pago se hace en Flow. Los créditos se acreditan solos apenas Flow lo confirma.</p>
+    <p class="nota">Precios con IVA incluido. El pago se hace en Flow. Los créditos se acreditan solos apenas Flow lo confirma.</p>
+
+    <div id="bloque-oc" class="oc" hidden>
+      <h2>¿Tu empresa paga con orden de compra?</h2>
+      <p class="hint">Plazo de <span id="oc-dias"></span> días, solo para los planes <span id="oc-planes"></span>. Revisamos tu pedido, te llega la factura y el link de pago al correo, y los créditos quedan disponibles al aprobarla.</p>
+      <button id="btn-abrir-oc" type="button" class="secundario">Pagar con orden de compra</button>
+      <form id="form-oc" hidden>
+        <p class="hint">Plan elegido: <strong id="oc-plan-elegido"></strong></p>
+        <label for="oc-rut">RUT de la empresa</label><input id="oc-rut" type="text" required placeholder="76.123.456-7" />
+        <label for="oc-razon">Razón social</label><input id="oc-razon" type="text" required maxlength="100" />
+        <label for="oc-giro">Giro</label><input id="oc-giro" type="text" required maxlength="80" />
+        <label for="oc-direccion">Dirección</label><input id="oc-direccion" type="text" required maxlength="70" />
+        <label for="oc-comuna">Comuna</label><input id="oc-comuna" type="text" required maxlength="20" />
+        <label for="oc-email">Correo para la factura y el cobro</label><input id="oc-email" type="email" required placeholder="pagos@tuempresa.cl" />
+        <label for="oc-numero">N° de orden de compra interna (opcional)</label><input id="oc-numero" type="text" maxlength="40" />
+        <button id="btn-oc" type="submit">Enviar orden de compra</button>
+      </form>
+      <div id="error-oc" class="error" hidden></div>
+    </div>
   </div>
+
+  <div id="oc-enviada" class="ok" hidden>Recibimos tu orden de compra. Te avisamos por WhatsApp apenas la aprobemos; la factura y el link de pago llegan a tu correo.</div>
+  <div id="en-mora" class="error" hidden>Tienes una orden de compra vencida sin pagar. Págala desde el link que te llegó por correo y todo se reactiva solo.</div>
 </div>
 
 <script>
@@ -90,6 +117,15 @@ var API = "https://certero-app.fly.dev";
     .then(function (res) {
       document.getElementById("cargando").hidden = true;
       if (!res.ok) return mostrarError("error-carga", res.d.error || "Este link no es válido.");
+      if (res.d.enMora) { document.getElementById("en-mora").hidden = false; return; }
+      planesOc = (res.d.oc && res.d.oc.planes) || [];
+      nombres = {};
+      res.d.planes.forEach(function (p) { nombres[p.id] = p.nombre + " — " + fmt(p.montoClp); });
+      if (planesOc.length) {
+        document.getElementById("oc-dias").textContent = res.d.oc.dias;
+        document.getElementById("oc-planes").textContent = res.d.planes.filter(function (p) { return planesOc.indexOf(p.id) >= 0; }).map(function (p) { return p.nombre; }).join(" y ");
+        document.getElementById("bloque-oc").hidden = false;
+      }
 
       var lista = document.getElementById("lista-planes");
       res.d.planes.forEach(function (p, i) {
@@ -131,6 +167,57 @@ var API = "https://certero-app.fly.dev";
     e.preventDefault();
     var elegido = document.querySelector("input[name=plan]:checked");
     pagar({ plan: elegido ? elegido.value : "", email: document.getElementById("email").value }, document.getElementById("btn-pagar"));
+  });
+
+  // Orden de compra a 30 días: usa el plan marcado arriba; solo los planes chicos la aceptan.
+  var planesOc = [];
+  var nombres = {};
+  function planElegido() {
+    var el = document.querySelector("input[name=plan]:checked");
+    return el ? el.value : "";
+  }
+  function refrescarOc() {
+    var plan = planElegido();
+    var errorOc = document.getElementById("error-oc");
+    document.getElementById("oc-plan-elegido").textContent = nombres[plan] || "";
+    if (planesOc.indexOf(plan) < 0) {
+      document.getElementById("form-oc").hidden = true;
+      errorOc.textContent = "Para pagar con orden de compra elige arriba el plan Individual o Esporádico.";
+      errorOc.hidden = false;
+      return false;
+    }
+    errorOc.hidden = true;
+    return true;
+  }
+  document.getElementById("lista-planes").addEventListener("change", function () {
+    if (!document.getElementById("btn-abrir-oc").hidden) return;
+    if (refrescarOc()) document.getElementById("form-oc").hidden = false;
+  });
+  document.getElementById("btn-abrir-oc").addEventListener("click", function () {
+    this.hidden = true;
+    if (refrescarOc()) document.getElementById("form-oc").hidden = false;
+  });
+  document.getElementById("form-oc").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!refrescarOc()) return;
+    var boton = document.getElementById("btn-oc");
+    var valor = function (id) { return document.getElementById(id).value; };
+    boton.disabled = true;
+    fetch(API + "/api/compra/" + encodeURIComponent(token) + "/oc", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plan: planElegido(), rut: valor("oc-rut"), razonSocial: valor("oc-razon"), giro: valor("oc-giro"),
+        direccion: valor("oc-direccion"), comuna: valor("oc-comuna"), email: valor("oc-email"), ocNumero: valor("oc-numero")
+      })
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok) { boton.disabled = false; return mostrarError("error-oc", res.d.error || "No pudimos registrar la orden de compra."); }
+        document.getElementById("contenido").hidden = true;
+        document.getElementById("oc-enviada").hidden = false;
+      })
+      .catch(function () { boton.disabled = false; mostrarError("error-oc", "No hay conexión. Inténtalo de nuevo."); });
   });
 </script>
 </body>

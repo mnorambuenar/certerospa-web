@@ -137,6 +137,7 @@
   </ul>
   <p><strong>Tu currículum es opcional.</strong> Certero no necesita que lo envíes: puedes contarnos tu experiencia en pocas líneas en la conversación. Si prefieres enviarlo (pegado en el chat o como archivo Word .docx o PDF), lo leemos solo para armar tu perfil y guardamos únicamente un resumen de tu experiencia laboral: cargo, años de experiencia, rubro, funciones, licencias o certificaciones, estudios y comuna. No conservamos el archivo ni el texto original, ni guardamos el nombre, RUT, dirección, correo o teléfono que aparezcan en él. Para leerlo usamos nuestro proveedor de modelo de lenguaje, al que le enviamos el contenido del currículum.</p>
   <p><strong>Planilla de vacantes de una empresa.</strong> Una empresa puede enviarnos varias vacantes juntas en una planilla (Excel .xlsx o CSV) por WhatsApp. Leemos solo las columnas de la planilla (cargo, comuna, renta, jornada, horario, requisitos, urgencia y licencias o cursos exigidos) e ignoramos cualquier otra. Cada fila pasa por la misma revisión que una vacante escrita en el chat, para lo que enviamos su contenido a nuestro proveedor de modelo de lenguaje. No conservamos el archivo: guardamos las filas revisadas hasta que la empresa confirma o descarta la carga, y solo las que confirma quedan como vacantes.</p>
+  <p><strong>Datos de facturación de una empresa.</strong> Si una empresa paga con orden de compra a 30 días, le pedimos RUT, razón social, giro, dirección, comuna, un correo de cobro y, si quiere, el número de su orden de compra interna. Los usamos solo para emitir la factura y cobrarla, y los guardamos junto a esa orden de compra, porque una factura tiene que poder reconstruirse tal como se emitió.</p>
   <p>Te lo decimos en el primer mensaje del asistente, antes de pedirte nada: qué información necesitamos y para qué.</p>
 
   <h2>Para qué usamos tus datos</h2>
@@ -151,6 +152,8 @@
     <li>Meta (WhatsApp), para el transporte de los mensajes de la conversación</li>
     <li>Nuestro proveedor de modelo de lenguaje (LLM), para procesar la conversación de intake y, si decides enviarlos, para leer tu currículum o la planilla de vacantes de tu empresa</li>
     <li>Supabase, para el almacenamiento de la base de datos</li>
+    <li>Flow, para procesar los pagos de las empresas (recibe el correo de pago y el monto)</li>
+    <li>Nuestro proveedor de facturación electrónica, para emitir la factura de una orden de compra (recibe los datos de facturación de la empresa)</li>
   </ul>
   <p>Estos proveedores pueden procesar datos fuera de Chile. Cuando una empresa confirma un match con tu perfil, esa empresa pasa a ser responsable de su propia copia de tus datos de contacto — este punto también queda detallado en nuestros <a href="../terminos/index.html">Términos de Servicio</a>.</p>
 
